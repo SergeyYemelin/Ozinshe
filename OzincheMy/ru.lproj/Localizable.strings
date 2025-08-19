@@ -1,0 +1,89 @@
+/* 
+  Localizable.strings
+  OzincheMy
+
+  Created by Сергей Емелин on 27.06.2025.
+  
+*/
+
+//ProfileViewController
+"PROFILE_TITLE" = "Профиль";
+"PROFILE_LABEL" = "Мой профиль";
+"USER_INFO_BUTTON" = "Персональная информация";
+"CHANGE_PASSWORD_BUTTON" = "Изменить пароль";
+"USER_INFO_BUTTON_SUBLABEL" = "Редактировать";
+"LANGUAGE_BUTTON" = "Язык";
+"LANGUAGE_BUTTON_SUBLABEL" = "Русский";
+"TERMS_AND_CONDITIONS_BUTTON" = "Условия и положения";
+"ANNOUNCEMENTS_BUTTON" = "Объявления";
+"DARK_MODE_BUTTON" = "Темный режим";
+
+//LogOutViewController
+"LOG_OUT_LABEL" = "Выход";
+"LOG_OUT_SUBLABEL" = "Вы действительно из своего аккаунта";
+"YES_EXIT_BUTTON" = "Да, выйти";
+"NO_EXIT_BUTTON" = "Нет";
+
+//EditProfileViewController
+"EDIT_PROFILE_TITLE" = "Персональная информация";
+"YOUR_NAME_LABEL" = "Your name";
+"ENTER_YOUR_NAME_PLACEHOLDER" = "Введите свое имя...";
+"ENTER_YOUR_EMAIL_PLACEHOLDER" = "Введите свой email...";
+"PHONE_LABEL" = "Телефон";
+"ENTER_YOUR_PHONE_NUMBER_PLACEHOLDER" = "Введите ваш номер телефона...";
+"BIRTH_DATE_LABEL" = "Дата рождения";
+"ENTER_YOUR_BIRTHDAY_PLACEHOLDER" = "Введите дату вашего рождения...";
+"SAVE_CHANGES_BUTTON" = "Сохранить изменения";
+
+//ChangePasswordViewController
+"CHANGE_PASSWORD_LABEL" = "Изменить пароль";
+"PASSWORD_LABEL" = "Пароль";
+"YOUR_PASSWORD_PLACEHOLDER" = "Ваш пароль";
+"REPEAT_PASSWORD_LABEL" = "Повторите пароль";
+"REPEAT_YOUR_PASSWORD_PLACEHOLDER" = "Повторите пароль";
+"SAVE_CHANGES_BUTTON" = "Сохранить изменения";
+
+//FavoriteViewController
+"FAVORITE_LABEL" = "Список";
+
+//SearchViewController
+"SEARCH_LABEL" = "Поиск";
+"SEARCH_TEXTFIELD_PLACEHOLDER" = "Поиск";
+"CATEGORIES_LABEL" = "Категории";
+"SEARCH_RESULTS_LABEL" = "Результаты поиска";
+
+//OnBoardingViewController
+"WELCOME_LABEL" = "Добро пожаловать в ÖZINŞE!";
+"SLIDE1_LABEL" = "Фильмы, сериалы, ситкомы, анимационные проекты, телешоу и реалити-шоу, аниме и многое другое";
+"SLIDE2_LABEL" = "Смотрите на любом устройстве Смотрите любимый фильм на телефоне, планшете или ноутбуке без дополнительной платы.";
+"SLIDE3_LABEL" = "Зарегистрироваться легко. Зарегистрируйтесь прямо сейчас и получите доступ к желаемому фильму.";
+"SKIP_BUTTON" = "Пропустить";
+"NEXT_BUTTON" = "Дальше";
+
+//SignInViewController
+"SIGN_IN_LABEL" = "Привет";
+"SIGN_IN_SUBLABEL" = "Войдите в свою учетную запись";
+"YOUR_EMAIL_PLACEHOLDER" = "Ваш email";
+"ERROR_LABEL" = "Неправильный формат";
+"PASSWORD_LABEL" = "Пароль";
+"YOUR_PASSWORD_PLACEHOLDER" = "Ваш пароль";
+"QUESTION_LABEL" = "Забыли пароль?";
+"SIGN_IN_BUTTON" = "Авторизоваться";
+"QUESTION_LABEL" = "У вас нет учетной записи?";
+"REGISTRATION_BUTTON" = "Регистрация";
+"OR_LABEL" = "Или";
+"SIGN_IN_WITH_APPLEID_BUTTON" = "Войти с Apple ID";
+"SIGN_IN_WITH_GOOGLE_BUTTON" = "Войти через Google";
+
+//SignUpViewController
+"REGISTRATION_LABEL" = "Регистрация";
+"REGISTRATION_SUBLABEL" = "Заполните данные";
+"YOUR_EMAIL_PLACEHOLDER" = "Ваш email";
+"PASSWORD_LABEL" = "Пароль";
+"YOUR_PASSWORD_PLACEHOLDER" = "Ваш пароль";
+"REPEAT_PASSWORD_LABEL" = "Повторите пароль";
+"REPEAT_PASSWORD_PLACEHOLDER" = "Ваш пароль";
+"ERROR_LABEL" = "Пользователь с этим адресом электронной почты зарегистрирован";
+"REGISTRATION_BUTTON" = "Регистрация";
+"QUESTION_LABEL" = "У вас есть аккаунт?";
+"TO_SIGN_IN_VC_BUTTON" = "Авторизоваться";

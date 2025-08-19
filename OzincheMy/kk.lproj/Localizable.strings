@@ -1,0 +1,89 @@
+/* 
+  Localizable.strings
+  OzincheMy
+
+  Created by Сергей Емелин on 27.06.2025.
+  
+*/
+
+//ProfileViewController
+"PROFILE_TITLE" = "Профиль";
+"PROFILE_LABEL" = "Менің профилім";
+"USER_INFO_BUTTON" = "Жеке деректер";
+"CHANGE_PASSWORD_BUTTON" = "Құпия сөзді өзгерту";
+"USER_INFO_BUTTON_SUBLABEL" = "Өңдеу";
+"LANGUAGE_BUTTON" = "Тіл";
+"LANGUAGE_BUTTON_SUBLABEL" = "Қазақша";
+"TERMS_AND_CONDITIONS_BUTTON" = "Ережелер мен шарттар";
+"ANNOUNCEMENTS_BUTTON" = "Хабарландырулар";
+"DARK_MODE_BUTTON" = "Қараңғы режим";
+
+//LogOutViewController
+"LOG_OUT_LABEL" = "Шығу";
+"LOG_OUT_SUBLABEL" = "Сіз шынымен аккаунтыныздан ";
+"YES_EXIT_BUTTON" = "Иә, шығу";
+"NO_EXIT_BUTTON" = "Жоқ";
+
+//EditProfileViewController
+"EDIT_PROFILE_TITLE" = "Жеке деректер";
+"YOUR_NAME_LABEL" = "Сіздің атыңыз";
+"ENTER_YOUR_NAME_PLACEHOLDER" = "Атыңынызды еңгізіңіз...";
+"ENTER_YOUR_EMAIL_PLACEHOLDER" = "Электрондық поштаңызды енгізіңіз...";
+"PHONE_LABEL" = "Телефон";
+"ENTER_YOUR_PHONE_NUMBER_PLACEHOLDER" = "Телефон нөміріңізді енгізіңіз...";
+"BIRTH_DATE_LABEL" = "Туылған күні";
+"ENTER_YOUR_BIRTHDAY_PLACEHOLDER" = "Туған күніңізді енгізіңіз...";
+"SAVE_CHANGES_BUTTON" = "Өзгерістерді сақтау";
+
+//ChangePasswordViewController
+"CHANGE_PASSWORD_LABEL" = "Құпия сөзді өзгерту";
+"PASSWORD_LABEL" = "Құпия сөз";
+"YOUR_PASSWORD_PLACEHOLDER" = "Сіздің құпия сөзіңіз";
+"REPEAT_PASSWORD_LABEL" = "Құпия сөзді қайталаңыз";
+"REPEAT_YOUR_PASSWORD_PLACEHOLDER" = "Сіздің құпия сөзіңіз";
+"SAVE_CHANGES_BUTTON" = "Өзгерістерді сақтау";
+
+//FavoriteViewController
+"FAVORITE_LABEL" = "Тізім";
+
+//SearchViewController
+"SEARCH_LABEL" = "Іздеу";
+"SEARCH_TEXTFIELD_PLACEHOLDER" = "Іздеу";
+"CATEGORIES_LABEL" = "Санаттар";
+"SEARCH_RESULTS_LABEL" = "Іздеу нәтижелері";
+
+//OnBoardingViewController
+"WELCOME_LABEL" = "ÖZINŞE-ге қош келдің!";
+"SLIDE1_LABEL" = "Фильмдер, телехикаялар, ситкомдар, анимациялық жобалар, телебағдарламалар мен реалити-шоулар, аниме және тағы басқалары";
+"SLIDE2_LABEL" = "Кез келген құрылғыдан қара Сүйікті фильміңді  қосымша төлемсіз телефоннан, планшеттен, ноутбуктан қара";
+"SLIDE3_LABEL" = "Тіркелу оңай. Қазір тіркел де қалаған фильміңе қол жеткіз";
+"SKIP_BUTTON" = "Өткізу";
+"NEXT_BUTTON" = "Әрі қарай";
+
+//SignInViewController
+"SIGN_IN_LABEL" = "Сәлем";
+"SIGN_IN_SUBLABEL" = "Аккаунтқа кіріңіз";
+"YOUR_EMAIL_PLACEHOLDER" = "Сіздің email";
+"ERROR_LABEL" = "Қате формат";
+"PASSWORD_LABEL" = "Құпия сөз";
+"YOUR_PASSWORD_PLACEHOLDER" = "Сіздің құпия сөзіңіз";
+"QUESTION_LABEL" = "Forgot password?";
+"SIGN_IN_BUTTON" = "Кіру";
+"QUESTION_LABEL" = "Аккаунтыныз жоқ па? Тіркелу";
+"REGISTRATION_BUTTON" = "Тіркелу";
+"OR_LABEL" = "Немесе";
+"SIGN_IN_WITH_APPLEID_BUTTON" = "Apple ID-мен тіркеліңіз";
+"SIGN_IN_WITH_GOOGLE_BUTTON" = "Google-мен тіркеліңіз";
+
+//SignUpViewController
+"REGISTRATION_LABEL" = "Тіркелу";
+"REGISTRATION_SUBLABEL" = "Деректерді толтырыңыз";
+"YOUR_EMAIL_PLACEHOLDER" = "Сіздің email";
+"PASSWORD_LABEL" = "Құпия сөз";
+"YOUR_PASSWORD_PLACEHOLDER" = "Сіздің құпия сөзіңіз";
+"REPEAT_PASSWORD_LABEL" = "Құпия сөзді қайталаңыз";
+"REPEAT_PASSWORD_PLACEHOLDER" = "Сіздің құпия сөзіңіз";
+"ERROR_LABEL" = "Мұндай email-ы бар пайдаланушы тіркелген";
+"REGISTRATION_BUTTON" = "Тіркелу";
+"QUESTION_LABEL" = "Сізде аккаунт бар ма? ";
+"TO_SIGN_IN_VC_BUTTON" = "Кіру";

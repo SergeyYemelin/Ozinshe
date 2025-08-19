@@ -1,0 +1,89 @@
+/* 
+  Localizable.strings
+  OzincheMy
+
+  Created by Сергей Емелин on 27.06.2025.
+  
+*/
+
+//ProfileViewController
+"PROFILE_TITLE" = "Profile";
+"PROFILE_LABEL" = "My profile";
+"USER_INFO_BUTTON" = "Personal information";
+"CHANGE_PASSWORD_BUTTON" = "Change password";
+"USER_INFO_BUTTON_SUBLABEL" = "Edit";
+"LANGUAGE_BUTTON" = "Language";
+"LANGUAGE_BUTTON_SUBLABEL" = "English";
+"TERMS_AND_CONDITIONS_BUTTON" = "Terms and conditions";
+"ANNOUNCEMENTS_BUTTON" = "Announcements";
+"DARK_MODE_BUTTON" = "Dark mode";
+
+//LogOutViewController
+"LOG_OUT_LABEL" = "Exit";
+"LOG_OUT_SUBLABEL" = "You really are from your account";
+"YES_EXIT_BUTTON" = "Yes, exit";
+"NO_EXIT_BUTTON" = "No";
+
+//EditProfileViewController
+"EDIT_PROFILE_TITLE" = "Personal information";
+"YOUR_NAME_LABEL" = "Your name";
+"ENTER_YOUR_NAME_PLACEHOLDER" = "Enter your name...";
+"ENTER_YOUR_EMAIL_PLACEHOLDER" = "Enter your email...";
+"PHONE_LABEL" = "Phone";
+"ENTER_YOUR_PHONE_NUMBER_PLACEHOLDER" = "Enter your phone number...";
+"BIRTH_DATE_LABEL" = "Birth date";
+"ENTER_YOUR_BIRTHDAY_PLACEHOLDER" = "Enter your birthday...";
+"SAVE_CHANGES_BUTTON" = "Save changes";
+
+//ChangePasswordViewController
+"CHANGE_PASSWORD_LABEL" = "Change password";
+"PASSWORD_LABEL" = "Password";
+"YOUR_PASSWORD_PLACEHOLDER" = "Your password";
+"REPEAT_PASSWORD_LABEL" = "Repeat password";
+"REPEAT_YOUR_PASSWORD_PLACEHOLDER" = "Repeat password";
+"SAVE_CHANGES_BUTTON" = "Save changes";
+
+//FavoriteViewController
+"FAVORITE_LABEL" = "List";
+
+//SearchViewController
+"SEARCH_LABEL" = "Search";
+"SEARCH_TEXTFIELD_PLACEHOLDER" = "Search";
+"CATEGORIES_LABEL" = "Categories";
+"SEARCH_RESULTS_LABEL" = "Search results";
+
+//OnBoardingViewController
+"WELCOME_LABEL" = "Welcome to ÖZINŞE!";
+"SLIDE1_LABEL" = "Movies, TV series, sitcoms, animated projects, TV shows and reality shows, anime and much more";
+"SLIDE2_LABEL" = "Watch on any device Watch your favorite movie on your phone, tablet, or laptop at no extra charge";
+"SLIDE3_LABEL" = "Signing up is easy. Sign up now and get access to the movie you want.";
+"SKIP_BUTTON" = "Skip";
+"NEXT_BUTTON" = "Further";
+
+//SignInViewController
+"SIGN_IN_LABEL" = "Hello";
+"SIGN_IN_SUBLABEL" = "Log in to your account";
+"YOUR_EMAIL_PLACEHOLDER" = "Your email";
+"ERROR_LABEL" = "Incorrect format";
+"PASSWORD_LABEL" = "Password";
+"YOUR_PASSWORD_PLACEHOLDER" = "Your password";
+"QUESTION_LABEL" = "Forgot password?";
+"SIGN_IN_BUTTON" = "Login";
+"QUESTION_LABEL" = "Don't have an account?";
+"REGISTRATION_BUTTON" = "Registration";
+"OR_LABEL" = "Or";
+"SIGN_IN_WITH_APPLEID_BUTTON" = "Sign in with Apple ID";
+"SIGN_IN_WITH_GOOGLE_BUTTON" = "Sign in with Google";
+
+//SignUpViewController
+"REGISTRATION_LABEL" = "Registration";
+"REGISTRATION_SUBLABEL" = "Fill in the details";
+"YOUR_EMAIL_PLACEHOLDER" = "Your email";
+"PASSWORD_LABEL" = "Password";
+"YOUR_PASSWORD_PLACEHOLDER" = "Your password";
+"REPEAT_PASSWORD_LABEL" = "Repeat password";
+"REPEAT_PASSWORD_PLACEHOLDER" = "Your password";
+"ERROR_LABEL" = "A user with this email address is registered";
+"REGISTRATION_BUTTON" = "Registration";
+"QUESTION_LABEL" = "Do you have an account?";
+"TO_SIGN_IN_VC_BUTTON" = "Login";
