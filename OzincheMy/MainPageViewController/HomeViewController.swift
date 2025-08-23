@@ -13,7 +13,7 @@ import SwiftyJSON
 
 class HomeViewController: UIViewController {
    
-    var mainMovies: [MainMovies] = []
+//    var mainMovies: [MainMovies] = []
     
 //MARK: - Add TableView
     
@@ -43,19 +43,19 @@ class HomeViewController: UIViewController {
         navigationItem.leftBarButtonItem = imageItem
     }
     
-    func setupUi() {
-        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
-        view.addSubview(tableView)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-        }
+//    func setupUi() {
+//        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
+//        view.addSubview(tableView)
+//        
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        
+//        tableView.snp.makeConstraints { (make) in
+//            make.top.equalTo(view.safeAreaLayoutGuide)
+//            make.bottom.equalTo(view.safeAreaLayoutGuide)
+//            make.leading.equalToSuperview()
+//            make.trailing.equalToSuperview()
+//        }
     }
     
     //MARK: - Downloads
@@ -101,11 +101,11 @@ class HomeViewController: UIViewController {
 //        }
 //        
 //    }
-    
-   
-    
-    
-}
+//    
+//   
+//    
+//    
+//}
 
 //extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 //    
