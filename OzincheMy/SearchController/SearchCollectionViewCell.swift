@@ -17,7 +17,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
     lazy var backView = {
         let view = UIView()
         
-        view.backgroundColor = UIColor(named: "F3F4F6")
+        view.backgroundColor = UIColor(named: "F3F4F6-374151")
         view.layer.cornerRadius = 8
         
         return view
@@ -29,7 +29,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
         
         label.text = ""
         label.font = UIFont(name: "SfProDisplay-Semibold", size: 12)
-        label.textColor = UIColor(named: "374151")
+        label.textColor = UIColor(named: "374151-F9FAFB")
         
         return label
     }()

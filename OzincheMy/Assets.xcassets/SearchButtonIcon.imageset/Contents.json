@@ -5,12 +5,44 @@
       "scale" : "1x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
       "filename" : "SearchButtonIcon@x2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "SearchButtonIcon@x2 1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
       "filename" : "SearchButtonIcon@x3.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "SearchButtonIcone@x3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

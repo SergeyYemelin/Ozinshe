@@ -36,7 +36,7 @@ class SearchViewController: UIViewController {
     lazy var searchTextField = {
        let textField = PaddedTextField()
         
-        textField.backgroundColor = .clear
+        textField.backgroundColor = UIColor(named: "#FFFFFF-#1C2431")
         textField.padding = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         textField.placeholder = "Іздеу"
         textField.font = UIFont(name: "SFProDisplay-Semibold", size: 16)
@@ -89,9 +89,10 @@ class SearchViewController: UIViewController {
         
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor(named: "ViewBackGroundColor")
         collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
         collectionView.contentInsetAdjustmentBehavior = .automatic
+        
         
         return collectionView
     }()

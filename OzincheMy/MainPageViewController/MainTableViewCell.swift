@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import SDWebImage
 
-protocol Movieprotocol {
-    func movieDidSelect(_ movie: Movie)
-}
+//protocol Movieprotocol {
+//    func movieDidSelect(_ movie: Movie)
+//}
 
 class TopAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {

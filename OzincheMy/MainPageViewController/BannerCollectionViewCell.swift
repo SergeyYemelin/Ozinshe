@@ -71,18 +71,18 @@ class BannerCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setData(bannerMovie: BannerMovie) {
-        let transformer = SDImageResizingTransformer(size: CGSize(width: 300, height: 164), scaleMode: .aspectFit)
-        
-        image.sd_setImage(with: URL(string: bannerMovie.link), placeholderImage: nil, context: [.imageTransformer:transformer])
-        
-        if let categoryName = bannerMovie.movie.categories.first?.name{
-            genreNameLabel.text = categoryName
-        }
-        
-        titleLabel.text = bannerMovie.movie.name
-        subTitleLabel.text = bannerMovie.movie.description
-    }
+//    func setData(bannerMovie: BannerMovie) {
+//        let transformer = SDImageResizingTransformer(size: CGSize(width: 300, height: 164), scaleMode: .aspectFit)
+//        
+//        image.sd_setImage(with: URL(string: bannerMovie.link), placeholderImage: nil, context: [.imageTransformer:transformer])
+//        
+//        if let categoryName = bannerMovie.movie.categories.first?.name{
+//            genreNameLabel.text = categoryName
+//        }
+//        
+//        titleLabel.text = bannerMovie.movie.name
+//        subTitleLabel.text = bannerMovie.movie.description
+//    }
     
     //MARK: - UI Setup
     

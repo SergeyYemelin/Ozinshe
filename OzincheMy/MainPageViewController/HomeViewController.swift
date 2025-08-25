@@ -24,7 +24,6 @@ class HomeViewController: UIViewController {
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
         tableView.backgroundColor = UIColor(named: "ViewBackGroundColor")
-        
 
         
         return tableView
@@ -43,19 +42,19 @@ class HomeViewController: UIViewController {
         navigationItem.leftBarButtonItem = imageItem
     }
     
-//    func setupUi() {
-//        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
-//        view.addSubview(tableView)
-//        
+    func setupUi() {
+        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        view.addSubview(tableView)
+        
 //        tableView.delegate = self
 //        tableView.dataSource = self
-//        
-//        tableView.snp.makeConstraints { (make) in
-//            make.top.equalTo(view.safeAreaLayoutGuide)
-//            make.bottom.equalTo(view.safeAreaLayoutGuide)
-//            make.leading.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//        }
+        
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
     }
     
     //MARK: - Downloads
@@ -66,7 +65,7 @@ class HomeViewController: UIViewController {
 //        let headers : HTTPHeaders = [
 //            "Autorization": "Bearer \(Storage.sharedInstance.accessToken)"
 //            ]
-//        AF.request(urls.MAIN_BANNERS_URL, method: .get, headers: headers).responseData { (response) in
+//        AF.request(Urls.MAIN_BANNERS_URL, method: .get, headers: headers).responseData { (response) in
 //            SVProgressHUD.dismiss()
 //            var resultString = ""
 //            if let data = response.data {
@@ -101,11 +100,8 @@ class HomeViewController: UIViewController {
 //        }
 //        
 //    }
-//    
-//   
-//    
-//    
-//}
+    
+}
 
 //extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 //    
