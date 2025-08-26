@@ -31,7 +31,7 @@ class MoviesTableViewCell: UITableViewCell {
         
         label.text = "Қызғалдақтар мекені"
         label.font = UIFont(name: "SFProDisplay-Bold", size: 14)
-        label.textColor = UIColor(named: "111827")
+        label.textColor = UIColor(named: "111827-FFFFFF")
         
         return label
     }()
@@ -51,7 +51,7 @@ class MoviesTableViewCell: UITableViewCell {
         let play = UIImageView(image: UIImage(named: "Play-Filled"))
         let label = UILabel()
         
-        view.backgroundColor = UIColor(named: "F8EEFF")
+        view.backgroundColor = UIColor(named: "F8EEFF-1C2431")
         view.layer.cornerRadius = 8
         
         label.text = "Қарау"
@@ -99,6 +99,7 @@ class MoviesTableViewCell: UITableViewCell {
     
     func setupUI() {
         
+        contentView.backgroundColor = UIColor(named: "ViewBackGroundColor")
         contentView.addSubviews(posterImageView, titleLabel, subtitleLabel, playView, bottomView)
         
         posterImageView.snp.makeConstraints { (make) in

@@ -19,9 +19,9 @@ class FavoriteViewController: UITableViewController {
         navigationItem.largeTitleDisplayMode = .inline
         
         
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .white
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+//        let appearance = UINavigationBarAppearance()
+//        appearance.backgroundColor = .white
+//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
         tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
         tableView.separatorStyle = .none
