@@ -49,7 +49,7 @@ class SignInViewController: UIViewController {
        let view = UIView()
         
         view.layer.cornerRadius = 12
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor(named: "TextFieldBackGroundColor")
         view.layer.borderColor = UIColor(named: "E5EBF0")?.cgColor
         view.layer.borderWidth = 1
         
@@ -67,7 +67,7 @@ class SignInViewController: UIViewController {
     let emailTextField: UITextField = {
         let textField = UITextField()
         
-        textField.backgroundColor = UIColor(named: "TextFieldBackGroundColor")
+        textField.backgroundColor = .clear
         textField.placeholder = "Сіздің email"
         textField.borderStyle = .none
         textField.textColor = UIColor(named: "TextColor")
@@ -99,7 +99,7 @@ class SignInViewController: UIViewController {
     let passwordView = {
        let view = UIView()
         
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor(named: "TextFieldBackGroundColor")
         view.layer.cornerRadius = 12
         view.layer.borderColor = UIColor(named: "E5EBF0")?.cgColor
         view.layer.borderWidth = 1
@@ -120,7 +120,7 @@ class SignInViewController: UIViewController {
     let passwordTextField: UITextField = {
         let textField = UITextField()
         
-        textField.backgroundColor = UIColor(named: "TextFieldBackGroundColor")
+        textField.backgroundColor = .clear
         textField.placeholder = "Сіздің құпия сөзіңіз"
         textField.isSecureTextEntry = true
         textField.textColor = UIColor(named: "111827")

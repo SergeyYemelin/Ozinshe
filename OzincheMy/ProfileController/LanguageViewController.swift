@@ -235,9 +235,4 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func restlanguage() {
-        let language = Localize.currentLanguage()
-        
-    }
-    
 }
