@@ -15,6 +15,10 @@ class ProfileViewController: UIViewController {
     
     //MARK: - UI Elements
     
+    let hello = 10
+    
+    
+    
     lazy var profileImage = {
         
         let image = UIImageView()
