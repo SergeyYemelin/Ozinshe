@@ -16,6 +16,7 @@ class ProfileViewController: UIViewController {
     //MARK: - UI Elements
     
     let hello = 10
+    let hello2 = 10
     
     
     
