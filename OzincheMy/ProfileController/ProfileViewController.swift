@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController {
     
     let hello = 10
     let hello2 = 10
-    
+    let hello3 = 10
     
     
     lazy var profileImage = {
