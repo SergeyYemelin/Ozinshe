@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarAppearance.stackedLayoutAppearance.selected.iconColor = UIColor(named: "7E2DFC")
         // Цвет иконки для выбранного (активного) таба.
 
-//        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(named: "TabBarSelectedIconColor") ?? .white]
+        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(named: "TabBarSelectedIconColor") ?? .white]
 //        // Цвет текста (названия) для активного таба. Используется тот же цвет, что и для иконки. Подстраховка на случай отсутствия цвета — .white.
 
         tabBarAppearance.stackedLayoutAppearance.normal.iconColor = UIColor(named: "#D1D5DB-#6B7280")

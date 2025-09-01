@@ -3,6 +3,16 @@
     {
       "filename" : "Profile.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "ProfileDark.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

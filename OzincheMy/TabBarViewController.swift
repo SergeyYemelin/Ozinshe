@@ -9,12 +9,19 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
 
+    private var appearanceObserver: UITraitChangeRegistration?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         SetupTabs()
         
+        appearanceObserver = registerForTraitChanges(
+                    [UITraitUserInterfaceStyle.self]
+                ) { (self: Self, previousTraitCollection: UITraitCollection) in
+                    self.updateTabBarIcons()
+                }
     }
     
     func SetupTabs() {
@@ -35,4 +42,29 @@ class TabBarViewController: UITabBarController {
 //        setViewControllers( [homeVC, searchVC, favoriteVC, profileVC], animated: true)
         viewControllers = [homeVC, searchNav, favoriteNav, profileNav]
     }
+    
+    private func updateTabBarIcons() {
+            guard let items = tabBar.items else { return }
+
+            if items.indices.contains(0) {
+                items[0].image = UIImage(named: "Home")
+                items[0].selectedImage = UIImage(named: "HomeSelected")
+            }
+        
+            if items.indices.contains(1) {
+                items[1].image = UIImage(named: "Search")
+                items[1].selectedImage = UIImage(named: "SearchSelected")
+            }
+        
+            if items.indices.contains(0) {
+            items[2].image = UIImage(named: "Favorite")
+            items[2].selectedImage = UIImage(named: "FavoriteSelected")
+            }
+        
+            if items.indices.contains(1) {
+            items[3].image = UIImage(named: "Profile")
+            items[3].selectedImage = UIImage(named: "ProfileSelected")
+            }
+        }
+    
 }
