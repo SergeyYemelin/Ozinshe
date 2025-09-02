@@ -213,7 +213,7 @@ class SignInViewController: UIViewController {
             config.attributedTitle = attributedTitle
 
             let button = UIButton(configuration: config)
-            button.backgroundColor = .white
+            button.backgroundColor = UIColor(named: "#FFFFFF-#4B5563")
             button.layer.borderColor = UIColor(named: "E5EBF0")?.cgColor
             button.layer.borderWidth = 1
             button.layer.cornerRadius = 12
