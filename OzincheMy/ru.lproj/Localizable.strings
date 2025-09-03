@@ -67,9 +67,9 @@
 "ERROR_LABEL" = "Неправильный формат";
 "PASSWORD_LABEL" = "Пароль";
 "YOUR_PASSWORD_PLACEHOLDER" = "Ваш пароль";
-"QUESTION_LABEL" = "Забыли пароль?";
+"QUESTION_LABEL_PASSWORD" = "Забыли пароль?";
 "SIGN_IN_BUTTON" = "Авторизоваться";
-"QUESTION_LABEL" = "У вас нет учетной записи?";
+"QUESTION_LABEL_SIGN_IN" = "У вас нет учетной записи? ";
 "REGISTRATION_BUTTON" = "Регистрация";
 "OR_LABEL" = "Или";
 "SIGN_IN_WITH_APPLEID_BUTTON" = "Войти с Apple ID";
@@ -85,5 +85,5 @@
 "REPEAT_PASSWORD_PLACEHOLDER" = "Ваш пароль";
 "ERROR_LABEL" = "Пользователь с этим адресом электронной почты зарегистрирован";
 "REGISTRATION_BUTTON" = "Регистрация";
-"QUESTION_LABEL" = "У вас есть аккаунт?";
+"QUESTION_LABEL_SIGN_UP" = "У вас есть аккаунт? ";
 "TO_SIGN_IN_VC_BUTTON" = "Авторизоваться";

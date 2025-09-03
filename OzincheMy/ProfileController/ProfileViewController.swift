@@ -48,7 +48,7 @@ class ProfileViewController: UIViewController {
         
         let backView = UIView()
 
-        backView.backgroundColor = UIColor(named: "BackViewBackGroundColor")
+        backView.backgroundColor = UIColor(named: "F9FAFB-111827")
         
         
         return backView
@@ -90,7 +90,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(named: "ProfileBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-1C2431")
        
         navigationItem.title = "Профиль"
         navigationItem.largeTitleDisplayMode = .inline
@@ -279,11 +279,11 @@ class ProfileViewController: UIViewController {
                     var config = UIButton.Configuration.plain()
                     config.title = title
                     config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0)
-            config.baseBackgroundColor = UIColor(named: "ViewBackGroundColor")
+            config.baseBackgroundColor = UIColor(named: "FFFFFF-111827")
                     
                     var attributes = AttributeContainer()
                     attributes.font = UIFont(name: "SFProDisplay-Medium", size: 16)
-                    attributes.foregroundColor = UIColor(named: "ProfileButtonTextColor")
+                    attributes.foregroundColor = UIColor(named: "1C2431-FFFFFF")
                     
                     config.attributedTitle = AttributedString(title, attributes: attributes)
                     
@@ -325,7 +325,7 @@ class ProfileViewController: UIViewController {
         "DARK_MODE_BUTTON"]
         
         guard let font = UIFont(name: "SFProDisplay-Medium", size: 16) else { return }
-        guard let color = UIColor(named: "ProfileButtonTextColor") else { return }
+        guard let color = UIColor(named: "1C2431-FFFFFF") else { return }
         
         for (index, key) in buttonTitles.enumerated() {
             buttons[index].setLocalizedStyledTitle(key, lang: Localize.currentLanguage(), font: font, color: color)

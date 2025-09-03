@@ -36,11 +36,11 @@ class SearchViewController: UIViewController {
     lazy var searchTextField = {
        let textField = PaddedTextField()
         
-        textField.backgroundColor = UIColor(named: "#FFFFFF-#1C2431")
+        textField.backgroundColor = UIColor(named: "FFFFFF-1C2431")
         textField.padding = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         textField.placeholder = "Іздеу"
         textField.font = UIFont(name: "SFProDisplay-Semibold", size: 16)
-        textField.textColor = UIColor(named: "TextColor")
+        textField.textColor = UIColor(named: "111827-FFFFFF")
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(named: "E5EBF0")!.cgColor
         textField.layer.cornerRadius = 12
@@ -73,7 +73,7 @@ class SearchViewController: UIViewController {
        let label = UILabel()
         
         label.text = "Санаттар"
-        label.textColor = UIColor(named: "TextColor")
+        label.textColor = UIColor(named: "111827-FFFFFF")
         label.font = UIFont(name: "SFProDisplay-Bold", size: 24)
         
         return label
@@ -89,7 +89,7 @@ class SearchViewController: UIViewController {
         
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        collectionView.backgroundColor = UIColor(named: "FFFFFF-111827")
         collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
         collectionView.contentInsetAdjustmentBehavior = .automatic
         
@@ -115,7 +115,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-111827")
 
         navigationItem.title = "Іздеу"
         navigationItem.largeTitleDisplayMode = .inline

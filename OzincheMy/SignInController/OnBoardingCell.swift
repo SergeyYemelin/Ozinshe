@@ -34,7 +34,7 @@ class OnBoardingCell: UICollectionViewCell {
        let label = UILabel()
         label.text = "ÖZINŞE-ге қош келдің!"
         label.font = UIFont(name: "SFProDisplay-Bold", size: 24)
-        label.textColor = UIColor(named: "TextColor")
+        label.textColor = UIColor(named: "111827-FFFFFF")
         label.textAlignment = .center
         label.numberOfLines = 0
         
@@ -54,10 +54,10 @@ class OnBoardingCell: UICollectionViewCell {
     
     lazy var skipButton = {
        let button = UIButton()
-        button.backgroundColor = UIColor(named: "F9FAFB")
+        button.backgroundColor = UIColor(named: "F9FAFB-111827")
         button.setTitle("Өткізу", for: .normal)
         button.titleLabel?.font = UIFont(name: "SFProDisplay-Semibold", size: 12)
-        button.setTitleColor(UIColor(named: "TextColor"), for: .normal)
+        button.setTitleColor(UIColor(named: "111827-FFFFFF"), for: .normal)
         button.layer.cornerRadius = 8
         button.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16)
         

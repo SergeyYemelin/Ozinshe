@@ -67,9 +67,9 @@
 "ERROR_LABEL" = "Қате формат";
 "PASSWORD_LABEL" = "Құпия сөз";
 "YOUR_PASSWORD_PLACEHOLDER" = "Сіздің құпия сөзіңіз";
-"QUESTION_LABEL" = "Forgot password?";
+"QUESTION_LABEL_PASSWORD" = "Forgot password?";
 "SIGN_IN_BUTTON" = "Кіру";
-"QUESTION_LABEL" = "Аккаунтыныз жоқ па? Тіркелу";
+"QUESTION_LABEL_SIGN_IN" = "Аккаунтыныз жоқ па? ";
 "REGISTRATION_BUTTON" = "Тіркелу";
 "OR_LABEL" = "Немесе";
 "SIGN_IN_WITH_APPLEID_BUTTON" = "Apple ID-мен тіркеліңіз";
@@ -85,5 +85,5 @@
 "REPEAT_PASSWORD_PLACEHOLDER" = "Сіздің құпия сөзіңіз";
 "ERROR_LABEL" = "Мұндай email-ы бар пайдаланушы тіркелген";
 "REGISTRATION_BUTTON" = "Тіркелу";
-"QUESTION_LABEL" = "Сізде аккаунт бар ма? ";
+"QUESTION_LABEL_SIGN_UP" = "Сізде аккаунт бар ма? ";
 "TO_SIGN_IN_VC_BUTTON" = "Кіру";

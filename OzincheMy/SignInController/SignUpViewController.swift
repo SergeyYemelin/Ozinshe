@@ -53,8 +53,8 @@ class SignUpViewController: UIViewController {
        let view = UIView()
         
         view.layer.cornerRadius = 12
-        view.backgroundColor = .clear
-        view.layer.borderColor = UIColor(named: "E5EBF0")?.cgColor
+        view.backgroundColor = UIColor(named: "FFFFFF-1C2431")
+        view.layer.borderColor = UIColor(named: "E5EBF0-374151")?.cgColor
         view.layer.borderWidth = 1
         
         return view
@@ -74,7 +74,7 @@ class SignUpViewController: UIViewController {
         
         textField.keyboardType = .asciiCapable
         
-        textField.backgroundColor = UIColor(named: "TextFieldBackGroundColor")
+        textField.backgroundColor = .clear
         textField.placeholder = "Сіздің email"
         textField.borderStyle = .none
         textField.textColor = UIColor(named: "TextColor")
@@ -96,9 +96,9 @@ class SignUpViewController: UIViewController {
     let passwordView = {
        let view = UIView()
         
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor(named: "FFFFFF-1C2431")
         view.layer.cornerRadius = 12
-        view.layer.borderColor = UIColor(named: "E5EBF0")?.cgColor
+        view.layer.borderColor = UIColor(named: "E5EBF0-374151")?.cgColor
         view.layer.borderWidth = 1
         
         return view
@@ -119,7 +119,7 @@ class SignUpViewController: UIViewController {
         
         textField.keyboardType = .asciiCapable
         
-        textField.backgroundColor = UIColor(named: "TextFieldBackGroundColor")
+        textField.backgroundColor = .clear
         textField.placeholder = "Сіздің құпия сөзіңіз"
         textField.isSecureTextEntry = true
         textField.textColor = UIColor(named: "111827")
@@ -152,9 +152,9 @@ class SignUpViewController: UIViewController {
     let repeatPasswordView = {
        let view = UIView()
         
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor(named: "FFFFFF-1C2431")
         view.layer.cornerRadius = 12
-        view.layer.borderColor = UIColor(named: "E5EBF0")?.cgColor
+        view.layer.borderColor = UIColor(named: "E5EBF0-374151")?.cgColor
         view.layer.borderWidth = 1
         
         return view
@@ -175,7 +175,7 @@ class SignUpViewController: UIViewController {
         
         textField.keyboardType = .asciiCapable
         
-        textField.backgroundColor = UIColor(named: "TextFieldBackGroundColor")
+        textField.backgroundColor = .clear
         textField.placeholder = "Сіздің құпия сөзіңіз"
         textField.isSecureTextEntry = true
         textField.textColor = UIColor(named: "111827")
@@ -255,9 +255,10 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-111827")
         let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground() // или .configureWithTransparentBackground(), если нужен прозрачный
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor(named: "FFFFFF-111827")
             appearance.shadowColor = .clear
 
             navigationController?.navigationBar.standardAppearance = appearance
@@ -524,7 +525,7 @@ class SignUpViewController: UIViewController {
         repeatPasswordLabel.text = "REPEAT_PASSWORD_LABEL".localized()
         errorLabel.text = "ERROR_LABEL".localized()
         registrationButton.setTitle("REGISTRATION_BUTTON".localized(), for: .normal)
-        questionLabel.text = "QUESTION_LABEL".localized()
+        questionLabel.text = "QUESTION_LABEL_SIGN_UP".localized()
         toSignInVCButton.setTitle("TO_SIGN_IN_VC_BUTTON".localized(), for: .normal)
         }
 }

@@ -1,9 +1,9 @@
-////
-////  Untitled.swift
-////  OzincheMy
-////
-////  Created by Сергей Емелин on 04.07.2025.
-////
+//
+//  Untitled.swift
+//  OzincheMy
+//
+//  Created by Сергей Емелин on 04.07.2025.
+//
 //import UIKit
 //
 //enum AppearanceManager {

@@ -17,7 +17,7 @@ class LanguageTableViewCell: UITableViewCell {
        let label = UILabel()
         
         label.text = ""
-        label.textColor = UIColor(named: "TextColor")
+        label.textColor = UIColor(named: "111827-FFFFFF")
         label.font = UIFont(name: "SfProDisplay-Bold", size: 16)
         
         return label
@@ -34,7 +34,7 @@ class LanguageTableViewCell: UITableViewCell {
     lazy var separatorLine = {
         let imageView = UIView()
         
-        imageView.backgroundColor = UIColor(named: "#D1D5DB-#374151")
+        imageView.backgroundColor = UIColor(named: "D1D5DB-374151")
         
         imageView.snp.makeConstraints { make in
             make.height.equalTo(1)

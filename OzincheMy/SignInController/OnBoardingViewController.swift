@@ -76,7 +76,7 @@ class OnBoardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-111827")
         
         setupUI()
         

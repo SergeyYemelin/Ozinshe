@@ -21,7 +21,7 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
     lazy var homeView = {
        let homeView = UIView()
         
-        homeView.backgroundColor = UIColor(named: "#D1D5DB-#6B7280")
+        homeView.backgroundColor = UIColor(named: "D1D5DB-6B7280")
         homeView.layer.cornerRadius = 3
         
         homeView.snp.makeConstraints { make in
@@ -36,7 +36,7 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
         let label = UILabel()
         
         label.text = "Тіл"
-        label.textColor = UIColor(named: "TextColor")
+        label.textColor = UIColor(named: "111827-FFFFFF")
         label.font = UIFont(name: "SFProDisplay-Bold", size: 24)
         
         return label
@@ -88,7 +88,7 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func setupModal() {
-        modalView.backgroundColor = UIColor(named: "#FFFFFF-#1C2431")
+        modalView.backgroundColor = UIColor(named: "FFFFFF-1C2431")
         modalView.layer.cornerRadius = 32
         modalView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         modalView.clipsToBounds = true

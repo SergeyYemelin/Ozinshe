@@ -3,6 +3,16 @@
     {
       "filename" : "Overlay.png",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "DarkFirstSlideOverlay.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

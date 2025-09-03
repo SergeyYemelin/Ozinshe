@@ -67,9 +67,9 @@
 "ERROR_LABEL" = "Incorrect format";
 "PASSWORD_LABEL" = "Password";
 "YOUR_PASSWORD_PLACEHOLDER" = "Your password";
-"QUESTION_LABEL" = "Forgot password?";
+"QUESTION_LABEL_PASSWORD" = "Forgot password?";
 "SIGN_IN_BUTTON" = "Login";
-"QUESTION_LABEL" = "Don't have an account?";
+"QUESTION_LABEL_SIGN_IN" = "Don't have an account? ";
 "REGISTRATION_BUTTON" = "Registration";
 "OR_LABEL" = "Or";
 "SIGN_IN_WITH_APPLEID_BUTTON" = "Sign in with Apple ID";
@@ -85,5 +85,5 @@
 "REPEAT_PASSWORD_PLACEHOLDER" = "Your password";
 "ERROR_LABEL" = "A user with this email address is registered";
 "REGISTRATION_BUTTON" = "Registration";
-"QUESTION_LABEL" = "Do you have an account?";
+"QUESTION_LABEL_SIGN_UP" = "Do you have an account? ";
 "TO_SIGN_IN_VC_BUTTON" = "Login";

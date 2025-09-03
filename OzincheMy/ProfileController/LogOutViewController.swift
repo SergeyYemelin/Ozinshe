@@ -33,7 +33,7 @@ class LogOutViewController: UIViewController {
         let label = UILabel()
         
         label.text = "Шығу"
-        label.textColor = UIColor(named: "TextColor")
+        label.textColor = UIColor(named: "111827-FFFFFF")
         label.font = UIFont(name: "SFProDisplay-Bold", size: 24)
         
         return label
@@ -71,7 +71,7 @@ class LogOutViewController: UIViewController {
         button.backgroundColor = .clear
         button.setTitle("Жоқ", for: .normal)
         button.titleLabel?.font = UIFont(name: "SFProDisplay-Semibold", size: 16)
-        button.setTitleColor(UIColor(named: "#5415C6-#B376F7"), for: .normal)
+        button.setTitleColor(UIColor(named: "5415C6-B376F7"), for: .normal)
         button.layer.cornerRadius = 12
         
         return button
@@ -83,7 +83,7 @@ class LogOutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-111827")
         
         setupBackground()
         setupModal()
@@ -114,7 +114,7 @@ class LogOutViewController: UIViewController {
     }
     
     func setupModal() {
-        modalView.backgroundColor = UIColor(named: "#FFFFFF-#1C2431")
+        modalView.backgroundColor = UIColor(named: "FFFFFF-1C2431")
         modalView.layer.cornerRadius = 32
         modalView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         modalView.clipsToBounds = true

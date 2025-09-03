@@ -16,7 +16,7 @@ class ChangePasswordViewController: UIViewController {
        let label = UILabel()
         
         label.text = "Құпия сөз"
-        label.textColor = UIColor(named: "TextColor")
+        label.textColor = UIColor(named: "111827-FFFFFF")
         label.font = UIFont(name: "SFProDisplay-Semibold", size: 14)
         
         return label
@@ -25,10 +25,10 @@ class ChangePasswordViewController: UIViewController {
     lazy var passwordView = {
        let view = UIView()
         
-        view.backgroundColor = UIColor(named: "TextFieldBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-1C2431")
         view.layer.cornerRadius = 12
         view.clipsToBounds = true
-        view.layer.borderColor = UIColor(named: "TextFieldFrameColor")?.cgColor
+        view.layer.borderColor = UIColor(named: "E5EBF0-374151")?.cgColor
         view.layer.borderWidth = 1
         
         return view
@@ -40,7 +40,7 @@ class ChangePasswordViewController: UIViewController {
         textField.backgroundColor = .clear
         textField.placeholder = "Сіздің құпия сөзіңіз"
         textField.isSecureTextEntry = true
-        textField.textColor = UIColor(named: "TextColor")
+        textField.textColor = UIColor(named: "111827-FFFFFF")
         textField.backgroundColor = .clear
 
         
@@ -68,10 +68,10 @@ class ChangePasswordViewController: UIViewController {
     lazy var repeatPasswordView = {
        let view = UIView()
         
-        view.backgroundColor = UIColor(named: "TextFieldBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-1C2431")
         view.layer.cornerRadius = 12
         view.clipsToBounds = true
-        view.layer.borderColor = UIColor(named: "TextFieldFrameColor")?.cgColor
+        view.layer.borderColor = UIColor(named: "E5EBF0-374151")?.cgColor
         view.layer.borderWidth = 1
         
         return view
@@ -81,7 +81,7 @@ class ChangePasswordViewController: UIViewController {
        let label = UILabel()
         
         label.text = "Құпия сөзді қайталаңыз"
-        label.textColor = UIColor(named: "TextColor")
+        label.textColor = UIColor(named: "111827-FFFFFF")
         label.font = UIFont(name: "SFProDisplay-Semibold", size: 14)
         
         return label
@@ -93,7 +93,7 @@ class ChangePasswordViewController: UIViewController {
         textField.backgroundColor = .clear
         textField.placeholder = "Сіздің құпия сөзіңіз"
         textField.isSecureTextEntry = true
-        textField.textColor = UIColor(named: "TextColor")
+        textField.textColor = UIColor(named: "111827-FFFFFF")
         textField.backgroundColor = .clear
 
         
@@ -137,7 +137,7 @@ class ChangePasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-111827")
 
         navigationItem.title = "Құпия сөзді өзгерту"
         navigationItem.largeTitleDisplayMode = .inline

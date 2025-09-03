@@ -37,7 +37,7 @@ class EditProfileViewController: UIViewController {
         )
         
         textField.font = UIFont(name: "SFProDisplay-Regular", size: 16)
-        textField.textColor = UIColor(named: "TextColor")
+        textField.textColor = UIColor(named: "111827-FFFFFF")
         
         return textField
     }()
@@ -68,7 +68,7 @@ class EditProfileViewController: UIViewController {
         )
         
         textField.font = UIFont(name: "SFProDisplay-Regular", size: 16)
-        textField.textColor = UIColor(named: "TextColor")
+        textField.textColor = UIColor(named: "111827-FFFFFF")
         
         return textField
     }()
@@ -98,7 +98,7 @@ class EditProfileViewController: UIViewController {
         )
         
         textField.font = UIFont(name: "SFProDisplay-Regular", size: 16)
-        textField.textColor = UIColor(named: "TextColor")
+        textField.textColor = UIColor(named: "111827-FFFFFF")
         
         return textField
     }()
@@ -128,7 +128,7 @@ class EditProfileViewController: UIViewController {
         )
         
         textField.font = UIFont(name: "SFProDisplay-Regular", size: 16)
-        textField.textColor = UIColor(named: "TextColor")
+        textField.textColor = UIColor(named: "111827-FFFFFF")
         
         return textField
     }()
@@ -152,7 +152,7 @@ class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-111827")
 
         navigationItem.title = "Жеке деректер"
         navigationItem.largeTitleDisplayMode = .inline
