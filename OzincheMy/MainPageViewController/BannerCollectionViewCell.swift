@@ -64,7 +64,7 @@ class BannerCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         setupUI()
-        backgroundColor = UIColor(named: "ViewBackGroundColor")
+        backgroundColor = UIColor(named: "FFFFFF-111827")
     }
     
     required init?(coder: NSCoder) {
