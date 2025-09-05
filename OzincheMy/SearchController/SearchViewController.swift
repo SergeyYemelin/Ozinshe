@@ -102,9 +102,9 @@ class SearchViewController: UIViewController {
         let tv = UITableView()
         tv.separatorStyle = .none
         tv.allowsSelection = true
+        tv.backgroundColor = UIColor(named: "FFFFFF-111827")
         tv.showsVerticalScrollIndicator = false
         tv.showsHorizontalScrollIndicator = false
-        tv.backgroundColor = .white
         tv.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
         
         return tv
@@ -212,7 +212,7 @@ class SearchViewController: UIViewController {
     
     func downloadSearchMovies() {
         if searchTextField.text!.isEmpty {
-            titleLabel.text = "Санаттар"
+            titleLabel.text = "CATEGORIES_LABEL".localized()
             collectionView.isHidden = false
             tableView.isHidden = true
 //            movies.removeAll()
