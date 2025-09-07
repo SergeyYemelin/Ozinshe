@@ -74,6 +74,7 @@ class LanguageTableViewCell: UITableViewCell {
             make.bottom.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(24)
         }
+        
     }
     
     //MARK: - Cell Configuration
@@ -82,4 +83,5 @@ class LanguageTableViewCell: UITableViewCell {
             textLabel?.text = title
         separatorLine.isHidden = !showSeparator
         }
+    
 }

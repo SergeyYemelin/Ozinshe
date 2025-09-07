@@ -61,7 +61,6 @@ class LogOutViewController: UIViewController {
         button.addTarget(self, action: #selector(tappedLogOut), for: .touchUpInside)
         
         return button
-        
     }()
     
     lazy var noExitButton = {
@@ -75,7 +74,6 @@ class LogOutViewController: UIViewController {
         button.layer.cornerRadius = 12
         
         return button
-        
     }()
     
     // MARK: - Lifecycle
@@ -96,7 +94,6 @@ class LogOutViewController: UIViewController {
                                                    name: NSNotification.Name("languageChanged"),
                                                    object: nil)
         
-        // Do any additional setup after loading the view.
     }
     
     deinit {

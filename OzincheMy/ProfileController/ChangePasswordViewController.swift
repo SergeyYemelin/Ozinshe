@@ -43,7 +43,6 @@ class ChangePasswordViewController: UIViewController {
         textField.textColor = UIColor(named: "111827-FFFFFF")
         textField.backgroundColor = .clear
 
-        
         return textField
     }()
     
@@ -96,7 +95,6 @@ class ChangePasswordViewController: UIViewController {
         textField.textColor = UIColor(named: "111827-FFFFFF")
         textField.backgroundColor = .clear
 
-        
         return textField
     }()
     
@@ -129,7 +127,6 @@ class ChangePasswordViewController: UIViewController {
         button.layer.cornerRadius = 12
         
         return button
-        
     }()
     
     //MARK: - Lifecycle
@@ -151,7 +148,6 @@ class ChangePasswordViewController: UIViewController {
                                                    selector: #selector(localizeLanguage),
                                                    name: NSNotification.Name("languageChanged"),
                                                    object: nil)
-        // Do any additional setup after loading the view.
     }
     
     deinit {

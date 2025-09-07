@@ -68,14 +68,11 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         
-        // Загружаем сохранённый индекс
             if let savedIndex = UserDefaults.standard.value(forKey: "SelectedLanguageIndex") as? Int {
                 selectedLanguageIndex = IndexPath(row: savedIndex, section: 0)
             } else {
-                // если впервые — определить по текущему языку
                 selectedLanguageIndex = IndexPath(row: languageCodeToIndex(Localize.currentLanguage()) ?? 0, section: 0)
             }
-        
     }
     
     // MARK: - Setup UI
@@ -130,6 +127,7 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "LanguageTableViewCell", for: indexPath) as? LanguageTableViewCell else {
                 return UITableViewCell()
             }
+        
         cell.backgroundColor = .clear
         
         let isLastCell = indexPath.row == languagesLabelArray.count - 1
@@ -211,7 +209,6 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
 
         Localize.setCurrentLanguage(languageCode)
         
-        // Сохраняем выбранный язык и индекс строки
         UserDefaults.standard.set(languageCode, forKey: "SelectedLanguageCode")
         
         if let index = languageCodeToIndex(languageCode) {
@@ -219,10 +216,8 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
             selectedLanguageIndex = IndexPath(row: index, section: 0)
         }
 
-        // Обновляем таблицу
         tableView.reloadData()
         
-        // Рассылаем уведомление другим экранам
         NotificationCenter.default.post(name: NSNotification.Name("languageChanged"), object: nil)
     }
     
