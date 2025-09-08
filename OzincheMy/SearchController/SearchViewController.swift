@@ -93,7 +93,6 @@ class SearchViewController: UIViewController {
         collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
         collectionView.contentInsetAdjustmentBehavior = .automatic
         
-        
         return collectionView
     }()
     
@@ -119,8 +118,6 @@ class SearchViewController: UIViewController {
 
         navigationItem.title = "Іздеу"
         navigationItem.largeTitleDisplayMode = .inline
-        
-        // Do any additional setup after loading the view.
         
         collectionView.dataSource = self
         collectionView.delegate = self

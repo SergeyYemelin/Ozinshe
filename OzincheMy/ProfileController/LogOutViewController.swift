@@ -93,7 +93,6 @@ class LogOutViewController: UIViewController {
                                                    selector: #selector(localizeLanguage),
                                                    name: NSNotification.Name("languageChanged"),
                                                    object: nil)
-        
     }
     
     deinit {

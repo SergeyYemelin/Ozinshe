@@ -113,7 +113,6 @@ class ProfileViewController: UIViewController {
                 name: NSNotification.Name("languageChanged"),
                 object: nil
             )
-        // Do any additional setup after loading the view.
     }
     
     deinit {
@@ -189,7 +188,6 @@ class ProfileViewController: UIViewController {
         buttons[0].addTarget(self, action: #selector(editProfileButtonTapped), for: .touchUpInside)
         buttons[1].addTarget(self, action: #selector(changePasswordButton), for: .touchUpInside)
         buttons[2].addTarget(self, action: #selector(languagebuttonTapped), for: .touchUpInside)
-        
     }
     
     func makeSeparatorLine() -> UIView {
@@ -228,7 +226,6 @@ class ProfileViewController: UIViewController {
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
         navigationController?.show(editProfileVC, sender: self)
-        
     }
     
     @objc func changePasswordButton() {
@@ -241,7 +238,6 @@ class ProfileViewController: UIViewController {
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
         navigationController?.show(changePasswordVC, sender: self)
-        
     }
     
     
@@ -251,7 +247,6 @@ class ProfileViewController: UIViewController {
         modalVC.modalTransitionStyle = .crossDissolve
         present(modalVC, animated: true)
         print("logOutTapped")
-        
     }
     
     @objc func languagebuttonTapped() {
