@@ -67,5 +67,4 @@ class TabBarViewController: UITabBarController {
             items[3].selectedImage = UIImage(named: "ProfileSelected")
             }
         }
-    
 }

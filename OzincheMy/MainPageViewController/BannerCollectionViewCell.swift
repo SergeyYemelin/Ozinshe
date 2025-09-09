@@ -123,5 +123,5 @@ class BannerCollectionViewCell: UICollectionViewCell {
             make.trailing.equalToSuperview().inset(8)
         }
     }
-    
+
 }
