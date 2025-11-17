@@ -6,7 +6,11 @@
 //
 
 import UIKit
-import Localize_Swift
+import SnapKit
+import SVProgressHUD
+import Alamofire
+import SwiftyJSON
+
 
 class SignInViewController: UIViewController {
 
@@ -148,7 +152,7 @@ class SignInViewController: UIViewController {
         button.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
         button.backgroundColor = UIColor(named: "7E2DFC")
         button.layer.cornerRadius = 12
-        button.addTarget(self, action: #selector(signUpTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
         
         return button
     }()
@@ -276,8 +280,6 @@ class SignInViewController: UIViewController {
                                                    selector: #selector(localizeLanguage),
                                                    name: NSNotification.Name("languageChanged"),
                                                    object: nil)
-//        updateLayout(true)
-        // Do any additional setup after loading the view.
     }
     
     deinit {
@@ -418,10 +420,64 @@ class SignInViewController: UIViewController {
     }
     
     @objc func signUpTapped() {
-        let tabBarVC = TabBarViewController()
+       
+            let tabBarVC = TabBarViewController()
         
         tabBarVC.modalPresentationStyle = .fullScreen
         self.present(tabBarVC, animated: true, completion: nil)
+    }
+    
+    func autoLogin(email: String, password: String) {
+            emailTextField.text = email
+            passwordTextField.text = password
+
+            signInTapped() // вызываем ту же функцию, что и при нажатии кнопки "Войти"
+        }
+    
+    @objc func signInTapped() {
+        let email = emailTextField.text!
+        let password = passwordTextField.text!
+        
+        SVProgressHUD.show()
+        
+        let parameters = ["email": email, "password": password]
+        
+        AF.request(URLs.SIGN_IN_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseData { response in
+            
+            SVProgressHUD.dismiss()
+            var resultString = ""
+            if let data = response.data {
+                resultString = String(data: data, encoding: .utf8)!
+                print(resultString)
+            }
+            
+            if response.response?.statusCode == 200 {
+                let json = JSON(response.data!)
+                print("JSON: \(json)")
+                
+                if let token = json["accessToken"].string {
+                    Storage.sharedInstance.accessToken = token
+                    UserDefaults.standard.set(token, forKey: "accessToken")
+                    self.startApp()
+                } else {
+                    SVProgressHUD.showError(withStatus: "CONNECTION_ERROR".localized())
+                }
+            } else {
+                var ErrorString = "CONNECTION_ERROR".localized()
+                    if let sCode = response.response?.statusCode {
+                        ErrorString = ErrorString + "\(sCode)"
+                    }
+                    ErrorString = ErrorString + "\(resultString)"
+                    SVProgressHUD.showError(withStatus: "\(ErrorString)")
+            }
+        }
+    }
+    
+    func startApp() {
+        let tabBarViewController = TabBarViewController()
+
+        tabBarViewController.modalPresentationStyle = .fullScreen
+        self.present(tabBarViewController, animated: true, completion: nil)
     }
 
     //MARK: - Private Methods

@@ -193,10 +193,14 @@ class LogOutViewController: UIViewController {
     }
     
     @objc func tappedLogOut() {
-        if let sceneDelegate = UIApplication.shared.connectedScenes
+        if #available(iOS 13.0, *) {
+            if let sceneDelegate = UIApplication.shared.connectedScenes
                 .first?.delegate as? SceneDelegate {
                 sceneDelegate.showOnboardingScreen()
             }
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     @objc private func localizeLanguage() {

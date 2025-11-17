@@ -17,8 +17,8 @@ class ChangePasswordViewController: UIViewController {
         
         label.text = "Құпия сөз"
         label.textColor = UIColor(named: "111827-FFFFFF")
-        label.font = UIFont(name: "SFProDisplay-Semibold", size: 14)
-        
+        label.font = UIFont(name: "SFProDisplay-Semibold", size: 20)
+
         return label
     }()
     
@@ -137,7 +137,12 @@ class ChangePasswordViewController: UIViewController {
         view.backgroundColor = UIColor(named: "FFFFFF-111827")
 
         navigationItem.title = "Құпия сөзді өзгерту"
-        navigationItem.largeTitleDisplayMode = .inline
+        
+        if #available(iOS 17.0, *) {
+            navigationItem.largeTitleDisplayMode = .inline
+        } else {
+            // Fallback on earlier versions
+        }
         navigationItem.hidesBackButton = true
         
         setupBackArrow()

@@ -23,13 +23,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print("Язык установлен:", Localize.currentLanguage())
         
         window = UIWindow(windowScene: windowScene)
-
-        let onboardingVC = OnBoardingViewController()
-        let navController = UINavigationController(rootViewController: onboardingVC)
         
-        window?.rootViewController = navController
-        window?.makeKeyAndVisible()
+        let login = "testMail@gmail.com"
+        let password = "123456"
 
+//        let onboardingVC = OnBoardingViewController()
+//        let navController = UINavigationController(rootViewController: onboardingVC)
+        let loginVC = SignInViewController()
+        window?.rootViewController = loginVC
+        window?.makeKeyAndVisible()
+        loginVC.autoLogin(email: login, password: password)
+        
+//        window?.rootViewController = navController
+//        window?.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

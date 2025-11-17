@@ -16,7 +16,11 @@ class FavoriteViewController: UITableViewController {
         view.backgroundColor = UIColor(named: "FFFFFF-111827")
         
         navigationItem.title = "Тізім"
-        navigationItem.largeTitleDisplayMode = .inline
+        if #available(iOS 17.0, *) {
+            navigationItem.largeTitleDisplayMode = .inline
+        } else {
+            // Fallback on earlier versions
+        }
         
         tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
         tableView.separatorStyle = .none

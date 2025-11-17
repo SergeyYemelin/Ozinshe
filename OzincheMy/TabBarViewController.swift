@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 17.0, *)
 class TabBarViewController: UITabBarController {
 
     private var appearanceObserver: UITraitChangeRegistration?
@@ -30,6 +31,7 @@ class TabBarViewController: UITabBarController {
         let searchVC = SearchViewController()
         let favoriteVC = FavoriteViewController()
         let profileVC = ProfileViewController()
+        let homeNav = UINavigationController(rootViewController: homeVC)
         let profileNav = UINavigationController(rootViewController: profileVC)
         let searchNav = UINavigationController(rootViewController: searchVC)
         let favoriteNav = UINavigationController(rootViewController: favoriteVC)
@@ -41,7 +43,7 @@ class TabBarViewController: UITabBarController {
         profileNav.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Profile"), selectedImage: UIImage(named: "ProfileSelected"))
         
 //        setViewControllers( [homeVC, searchVC, favoriteVC, profileVC], animated: true)
-        viewControllers = [homeVC, searchNav, favoriteNav, profileNav]
+        viewControllers = [homeNav, searchNav, favoriteNav, profileNav]
     }
     
     private func updateTabBarIcons() {
@@ -68,3 +70,4 @@ class TabBarViewController: UITabBarController {
             }
         }
 }
+

@@ -155,7 +155,11 @@ class EditProfileViewController: UIViewController {
         view.backgroundColor = UIColor(named: "FFFFFF-111827")
 
         navigationItem.title = "Жеке деректер"
-        navigationItem.largeTitleDisplayMode = .inline
+        if #available(iOS 17.0, *) {
+            navigationItem.largeTitleDisplayMode = .inline
+        } else {
+            // Fallback on earlier versions
+        }
         navigationItem.hidesBackButton = true
         
         setupBackArrow()

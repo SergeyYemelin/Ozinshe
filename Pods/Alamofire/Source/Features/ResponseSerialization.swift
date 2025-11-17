@@ -440,10 +440,8 @@ public protocol DataDecoder: Sendable {
 }
 
 /// `JSONDecoder` automatically conforms to `DataDecoder`.
-@available(iOS 16.0, *)
 extension JSONDecoder: DataDecoder {}
 /// `PropertyListDecoder` automatically conforms to `DataDecoder`.
-@available(iOS 16.0, *)
 extension PropertyListDecoder: DataDecoder {}
 
 // MARK: - Decodable

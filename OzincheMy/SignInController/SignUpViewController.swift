@@ -213,7 +213,7 @@ class SignUpViewController: UIViewController {
         button.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: 16)
         button.backgroundColor = UIColor(named: "7E2DFC")
         button.layer.cornerRadius = 12
-        button.addTarget(self, action: #selector(registrationButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signUpTapped), for: .touchUpInside)
         
         return button
     }()
@@ -422,39 +422,37 @@ class SignUpViewController: UIViewController {
         repeatPasswordTextField.isSecureTextEntry = !repeatPasswordTextField.isSecureTextEntry
     }
     
-    @objc func registrationButtonTapped() {
+    @objc func signUpTapped() {
         let signUpEmail = emailTextField.text!
         let signUpPassword = passwordTextField.text!
         let confirmPassword = repeatPasswordTextField.text!
         
         if signUpPassword == confirmPassword {
             
-            SVProgressHUD.show()
-            let parameters = ["email": signUpEmail, "password": signUpPassword]
-            AF.request(Urls.SIGN_UP_URL, method: .post, parameters: parameters,
-                       encoding: JSONEncoding.default).responseData { response in
-                
-                SVProgressHUD.dismiss()
-                var resultString = ""
-                if let data = response.data {
-                    resultString = String(data: data, encoding: .utf8)!
-                    print(resultString)
-                }
-                
-                if response.response?.statusCode == 200 {
-                    let json = JSON(response.data!)
-                    print("JSON: \(json)")
-                    
-                    if let token = json["AccessToken"].string {
-                        Storage.sharedInstance.accessToken = token
-                        UserDefaults.standard.set(token, forKey: "accessToken")
-                        self.startApp()
-                    } else {
-                        SVProgressHUD.showError(withStatus: "Connection error")
-                    }
-                    print("Registration is successful")
+        SVProgressHUD.show()
+        let parameters = ["email": signUpEmail, "password": signUpPassword]
+        AF.request(URLs.SIGN_UP_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseData { response in
+            
+        SVProgressHUD.dismiss()
+        var resultString = ""
+            if let data = response.data {
+                resultString = String(data: data, encoding: .utf8)!
+                print(resultString)
+            }
+            
+            if response.response?.statusCode == 200 {
+                let json = JSON(response.data!)
+                print("JSON: \(json)")
+            
+                if let token = json["accessToken"].string {
+                    Storage.sharedInstance.accessToken = token
+                    UserDefaults.standard.set(token, forKey: "accessToken")
+                    self.startApp()
                 } else {
-                    var ErrorString = "Connection error"
+                    SVProgressHUD.showError(withStatus: "CONNECTION_ERROR".localized())
+                }
+            } else {
+                var ErrorString = "CONNECTION_ERROR".localized()
                     if let sCode = response.response?.statusCode {
                         ErrorString = ErrorString + "\(sCode)"
                     }
@@ -462,22 +460,22 @@ class SignUpViewController: UIViewController {
                     SVProgressHUD.showError(withStatus: "\(ErrorString)")
                 }
             }
-                
+            print("Registration is successful")
         } else {
-            showAllert(message: "Try again")
+            showAlert(message: "Try again")
         }
     }
     
-    func showAllert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message,
-            preferredStyle: .alert)
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
-        
     }
     
     func startApp() {
+    
         let tabViewController = TabBarViewController()
+        
         tabViewController.modalPresentationStyle = .fullScreen
         self.present(tabViewController, animated: true, completion: nil)
     }
