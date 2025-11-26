@@ -52,13 +52,13 @@ class SearchCollectionViewCell: UICollectionViewCell {
         backView.addSubview(label)
         
         backView.snp.makeConstraints { (make) in
-            make.edges.equalTo(contentView.safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
+            make.height.greaterThanOrEqualTo(34)
         }
         
         label.snp.makeConstraints { (make) in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.top.bottom.equalToSuperview()
-            make.height.equalTo(34)
+            make.top.bottom.equalToSuperview().inset(8)
         }
     }
     

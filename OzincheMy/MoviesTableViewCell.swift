@@ -36,7 +36,7 @@ class MoviesTableViewCell: UITableViewCell {
         return label
     }()
 
-    lazy var subtitleLabel = {
+    lazy var subTitleLabel = {
         let label = UILabel()
         
         label.text = "2020 · Телехикая · Мультфильм"
@@ -100,7 +100,7 @@ class MoviesTableViewCell: UITableViewCell {
     func setupUI() {
         
         contentView.backgroundColor = UIColor(named: "FFFFFF-111827")
-        contentView.addSubviews(posterImageView, titleLabel, subtitleLabel, playView, bottomView)
+        contentView.addSubviews(posterImageView, titleLabel, subTitleLabel, playView, bottomView)
         
         posterImageView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().inset(24)
@@ -114,13 +114,13 @@ class MoviesTableViewCell: UITableViewCell {
             make.left.equalTo(posterImageView.snp.right).offset(17)
         }
         
-        subtitleLabel.snp.makeConstraints { (make) in
+        subTitleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.left.equalTo(posterImageView.snp.right).offset(17)
         }
         
         playView.snp.makeConstraints { (make) in
-            make.top.equalTo(subtitleLabel.snp.bottom).offset(24)
+            make.top.equalTo(subTitleLabel.snp.bottom).offset(24)
             make.left.equalTo(posterImageView.snp.right).offset(17)
             make.height.equalTo(26)
             make.width.equalTo(80)

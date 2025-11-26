@@ -7,18 +7,41 @@
 
 import UIKit
 import SnapKit
-
+import youtube_ios_player_helper
 
 class PlayerViewController: UIViewController {
 
-    var videoID: String = ""
+    let playerView = YTPlayerView()
+    var videoId: String?
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .black
 
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            view.backgroundColor = UIColor(named: "FFFFFF-111827")
+        setupPlayerView()
+        loadVideo()
+    }
 
-        }
+    private func setupPlayerView() {
+        playerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(playerView)
 
-     
+        NSLayoutConstraint.activate([
+            playerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            playerView.heightAnchor.constraint(equalTo: playerView.widthAnchor, multiplier: 9.0/16.0)
+        ])
+    }
+
+    private func loadVideo() {
+        let id = videoId ?? ""
+
+        playerView.load(withVideoId: id, playerVars: [
+            "playsinline": 1,
+            "autoplay": 1,
+            "controls": 1,
+            "modestbranding": 1
+        ])
+    }
 }

@@ -18,6 +18,8 @@ class MovieDetailViewController: UIViewController {
     
     var movie: Movie?
     
+    var isFavorite = false
+    
     var screenshots: [Poster] = []
     
     private var tabBarHeight: CGFloat {
@@ -111,11 +113,13 @@ class MovieDetailViewController: UIViewController {
         return button
     }()
     
-    lazy var favoriteButton = {
+    lazy var favoriteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "FavoriteButtonImage"), for: .normal)
+        button.setImage(UIImage(named: "FavoriteButtonImage"), for: UIControl.State.normal)
+        button.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
         return button
     }()
+    
     
     lazy var favoriteButtonLabel = {
         let label = UILabel()
@@ -171,7 +175,6 @@ class MovieDetailViewController: UIViewController {
         
         label.font = UIFont(name: "SFProDisplay-Regular", size: 14)
         label.textColor = UIColor(named: "9CA3AF")
-        //        label.numberOfLines = 4
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
@@ -267,20 +270,21 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     
-    lazy var seasonsButton = {
-        let button = UIButton()
-        button.setTitle("5 сезон, 46 серия", for: .normal)
-        button.contentHorizontalAlignment = .right
-        button.setTitleColor(UIColor(named: "9CA3AF"), for: .normal)
-        button.titleLabel?.font = UIFont(name: "SFProDisplay-Semibold", size: 12)
-        //        button.addTarget(self, action: #selector(playMovieTapped), for: .touchUpInside)
-        return button
+    lazy var seasonsAndSeriesLabel: UILabel = {
+        let label = UILabel()
+        label.text = "5 сезон, 46 серия"
+        label.textAlignment = .right
+        label.textColor = UIColor(named: "9CA3AF")
+        label.font = UIFont(name: "SFProDisplay-Semibold", size: 12)
+        return label
     }()
     
-    let arrowImage = {
-        let iv = UIImageView()
-        iv.image = UIImage(named: "ArrowImage")
-        return iv
+    lazy var SeasonsButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "ArrowImage"), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(playMovieTapped), for: .touchUpInside)
+        return button
     }()
     
     let screenshotsLabel = {
@@ -357,6 +361,7 @@ class MovieDetailViewController: UIViewController {
         similarCollectionView.dataSource = self
         
         fetchMovieDetails()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -386,7 +391,7 @@ class MovieDetailViewController: UIViewController {
             nameLabel, detailLabel, grayView1, descriptionLabel,descriptionGradientView,
             fullDescriptionButton, directorLabel, directorNameLabel,
             producerLabel, producerNameLabel, grayView2,
-            seasonsLabel, seasonsButton, arrowImage,
+            seasonsLabel, seasonsAndSeriesLabel, SeasonsButton,
             screenshotsLabel, screenshotsCollectionView,
             similarMoviesLabel, similarCollectionView
         )
@@ -522,13 +527,13 @@ class MovieDetailViewController: UIViewController {
             make.leading.equalToSuperview().inset(24)
         }
         
-        seasonsButton.snp.makeConstraints { make in
+        seasonsAndSeriesLabel.snp.makeConstraints { make in
             make.centerY.equalTo(seasonsLabel)
             make.leading.equalTo(seasonsLabel.snp.trailing)
             make.trailing.equalToSuperview().inset(45)
         }
         
-        arrowImage.snp.makeConstraints { make in
+        SeasonsButton.snp.makeConstraints { make in
             make.centerY.equalTo(seasonsLabel)
             make.trailing.equalToSuperview().inset(24)
             make.size.equalTo(CGSize(width: 16, height: 16))
@@ -561,42 +566,37 @@ class MovieDetailViewController: UIViewController {
     private func fetchMovieDetails() {
         print("Загружаем детали фильма с id: \(movieID)")
         
-        guard let url = URL(string: URLs.MOVIE_BY_ID_URL + "\(movieID)") else {
-            print("❌ Неверный URL")
-            return
-        }
-        
+        guard let url = URL(string: URLs.MOVIE_BY_ID_URL + "\(movieID)") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        
-        // Добавляем токен
-        let token = Storage.sharedInstance.accessToken
-        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(Storage.sharedInstance.accessToken)", forHTTPHeaderField: "Authorization")
         
         Task {
             do {
-                let (data, response) = try await URLSession.shared.data(for: request)
-                
-                if let httpResponse = response as? HTTPURLResponse {
-                    print("📡 Код ответа:", httpResponse.statusCode)
-                }
-                
-                // Декодируем объект Movie
+                let (data, _) = try await URLSession.shared.data(for: request)
                 let movie = try JSONDecoder().decode(Movie.self, from: data)
                 
                 await MainActor.run {
                     self.movie = movie
-                    
                     self.updateUI(with: movie)
-                    
                     if let shots = movie.screenshots {
                         self.screenshots = shots
                         self.screenshotsCollectionView.reloadData()
                     }
                 }
                 
+                isFavorite = movie.favorite
+                
+                if movie.favorite == true {
+                    print(true)
+                    self.configureFavoriteButton(isFavorite: true)
+                } else {
+                    print(false)
+                    self.configureFavoriteButton(isFavorite: false)
+                }
+                
             } catch {
-                print("❌ Ошибка загрузки деталей фильма:", error)
+                print("Ошибка загрузки фильма или избранного:", error)
             }
         }
     }
@@ -625,22 +625,39 @@ class MovieDetailViewController: UIViewController {
             directorNameLabel.text = movie.director
             producerNameLabel.text = movie.producer
             
+            if movie.movieType == "SERIAL" {
+                let seasonCount = movie.seasonCount ?? 0
+                let seriesCount = movie.seriesCount ?? 0
+                
+                let seasonsText = seasonCount.declension("сезон", "сезона", "сезонов")
+                let seriesText = seriesCount.declension("серия", "серии", "серий")
+                
+                seasonsAndSeriesLabel.text = "\(seasonsText), \(seriesText)"
+            } else {
+                seasonsAndSeriesLabel.isHidden = true
+                seasonsLabel.isHidden = true
+                SeasonsButton.isHidden = true
+            }
+            
         }
     }
     
     private func makeDetailText(from movie: Movie) -> String {
         let year = "\(movie.year)"
-        let genresString = movie.genres?.map { $0.name }.joined(separator: ", ") ?? ""
-        let durationString = movie.timing != nil ? "\(movie.timing!) мин" : ""
-        
-        // Допустим, у тебя потом будет поле type: "MOVIE" или "SERIAL"
-        if movie.categories?.contains(where: { $0.name == "Телехикая" }) == true {
-            // сериал
-            let seasonText = "5 сезон, 46 серия" // позже можно заменить на реальные данные
-            return "\(year) • Телехикая • \(seasonText) • \(durationString)"
+        let categoriesString = movie.categories?.map { $0.name }.joined(separator: ", ") ?? ""
+        let durationString = movie.timing != nil ? "\(movie.timing!) мин." : ""
+
+        if movie.movieType == "SERIAL" {
+            let seasonCount = movie.seasonCount ?? 0
+            let seriesCount = movie.seriesCount ?? 0
+            
+            let seasonsText = seasonCount.declension("сезон", "сезона", "сезонов")
+            let seriesText = seriesCount.declension("серия", "серии", "серий")
+
+            return "\(year) • \(categoriesString) • \(seasonsText), \(seriesText) • \(durationString)"
         } else {
-            // фильм
-            return "\(year) • \(genresString) • \(durationString)"
+            // Фильм
+            return "\(year) • \(categoriesString) • \(durationString)"
         }
     }
     
@@ -667,16 +684,16 @@ class MovieDetailViewController: UIViewController {
         
         // 5. Определяем, нужно ли показывать кнопку "Толығырақ" и градиент
         DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            
-            let lines = descriptionLabel.visibleLineCount()
+            guard let self = self else { return }
+
+            let lines = self.descriptionLabel.visibleLineCount()
             
             if lines > 4 {
-                fullDescriptionButton.isHidden = false
-                descriptionGradientView.isHidden = false
+                self.fullDescriptionButton.isHidden = false
+                self.descriptionGradientView.isHidden = false
             } else {
-                fullDescriptionButton.isHidden = true
-                descriptionGradientView.isHidden = true
+                self.fullDescriptionButton.isHidden = true
+                self.descriptionGradientView.isHidden = true
             }
         }
     }
@@ -705,12 +722,48 @@ class MovieDetailViewController: UIViewController {
     }
     
     @objc func playMovieTapped() {
-        guard let videoID = movie?.video?.link else { return }
+        if movie?.movieType == "MOVIE" {
+            return
+        } else {
+            let seasonsVC = SeriesAndSeasonsViewController()
+            
+            seasonsVC.movie = movie
+            
+            navigationController?.show(seasonsVC, sender: self)
+            navigationItem.title = ""
+        }
+    }
+    
+    private func configureFavoriteButton(isFavorite: Bool) {
+        if isFavorite {
+            favoriteButton.setImage(UIImage(named: "FavoriteButtonImageSelected"), for: .normal)
+        } else {
+            favoriteButton.setImage(UIImage(named: "FavoriteButtonImage"), for: .normal)
+        }
+    }
 
-        let playerVC = PlayerViewController()
-        playerVC.videoID = videoID
-        
-        navigationController?.pushViewController(playerVC, animated: true)
+    @objc func favoriteButtonTapped() {
+        guard var movie = movie else { return }
+
+        movie.favorite.toggle()
+        self.movie = movie
+        configureFavoriteButton(isFavorite: movie.favorite)
+
+        Task {
+            do {
+                if movie.favorite {
+                    try await FavoritesService.shared.addToFavorite(movieId: movie.id)
+                } else {
+                    try await FavoritesService.shared.removeFromFavorite(movieId: movie.id)
+                }
+            } catch {
+                print("Ошибка при обновлении избранного на сервере:", error)
+                // Если нужно, можно откатить локальное состояние при ошибке:
+                movie.favorite.toggle()
+                self.movie = movie
+                configureFavoriteButton(isFavorite: movie.favorite)
+            }
+        }
     }
 }
     
@@ -730,14 +783,8 @@ extension MovieDetailViewController: UICollectionViewDelegate, UICollectionViewD
         if collectionView == self.similarCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimilarCollectionViewCell.identifier, for: indexPath) as! SimilarCollectionViewCell
             
-            //            let transformer = SDImageResizingTransformer(size: CGSize(width: 112, height: 164), scaleMode: .aspectFill)
             cell.imageView.layer.cornerRadius = 8
             
-            //            similarCell.contentView.layer.borderColor = UIColor.red.cgColor
-            //            similarCell.contentView.layer.borderWidth = 2
-            
-            //            similarCell.imageView.layer.borderColor = UIColor.blue.cgColor
-            //            similarCell.imageView.layer.borderWidth = 2
             let movie = similarMovies[indexPath.item]
             
             cell.imageView.image = UIImage(named: movie.imageName)
@@ -781,8 +828,7 @@ extension MovieDetailViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.similarCollectionView {
-            //            let movieDetailVC = MovieDetailViewController()
-            //            navigationController?.show(movieDetailVC, sender: self)
+            
             
             let seasonVC = SeriesAndSeasonsViewController()
             navigationController?.show(seasonVC, sender: self)

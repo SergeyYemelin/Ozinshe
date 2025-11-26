@@ -13,11 +13,9 @@ class SeasonSeriesTableViewCell: UITableViewCell {
       
       let seriesLabel = {
           let label = UILabel()
-          
           label.text = "1 - ші бөлім"
           label.font = UIFont(name: "SFProDisplay-Bold", size: 14)
           label.textColor = UIColor(named: "111827 - FFFFFF")
-          
           return label
       }()
       
@@ -26,14 +24,13 @@ class SeasonSeriesTableViewCell: UITableViewCell {
           image.image = UIImage(named: "seriesImage")
           image.layer.cornerRadius = 12
           image.clipsToBounds = true
-          
           return image
       }()
       
       let grayView = {
           let view = UIView()
           view.backgroundColor = UIColor(named: "D1D5DB")
-          
+
           return view
       }()
       

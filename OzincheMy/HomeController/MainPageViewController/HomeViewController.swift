@@ -11,34 +11,32 @@ import SnapKit
 import SVProgressHUD
 import SwiftyJSON
 
-class HomeViewController: UIViewController, MainTableViewCellDelegate {
-   
-//MARK: - Add TableView
+class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTableViewCellDelegate {
+    
+    //MARK: - Add TableView
     
     var rows: [HomeRow] = []
-    
     var bannerMovies: [Banner] = []
     var genres: [Genre] = []
-    
     var firstRowMovies: [Movie] = []
     var secondRowMovies: [Movie] = []
     var thirdRowMovies: [Movie] = []
     var categoriesAge: [Genre] = []
+    var allMovies: [Movie] = []
     
     let tableView = {
-       let tableView = UITableView()
+        let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.allowsSelection = true
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
         tableView.backgroundColor = UIColor(named: "FFFFFF-111827")
-
+        
         tableView.register(MainBannerTableViewCell.self, forCellReuseIdentifier: MainBannerTableViewCell.identifier)
         tableView.register(GenreTableViewCell.self, forCellReuseIdentifier: GenreTableViewCell.identifier)
         tableView.register(HistoryTableViewCell.self, forCellReuseIdentifier: HistoryTableViewCell.identifier)
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
-        
-
+    
         return tableView
     }()
     
@@ -51,27 +49,28 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate {
         tableView.contentInset.top = 32
         
         let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = UIColor(named: "FFFFFF-111827")
-            appearance.shadowColor = .clear
-
-            navigationController?.navigationBar.standardAppearance = appearance
-            navigationController?.navigationBar.scrollEdgeAppearance = appearance
-
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(named: "FFFFFF-111827")
+        appearance.shadowColor = .clear
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
         addNavBarImage()
         setupUi()
         mainBannerDownoloadData()
         genresDownloadData()
         moviesByCategoriesDownloadData()
         categoryAgeDownloadData()
+        allMoviesDownloadData()
     }
     
     func addNavBarImage() {
         
         let image = UIImage(named: "logotipImage")
-
+        
         let logoImageView = UIImageView(image: image)
-
+        
         let imageItem = UIBarButtonItem.init(customView: logoImageView)
         navigationItem.leftBarButtonItem = imageItem
     }
@@ -95,36 +94,36 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate {
     func mainBannerDownoloadData() {
         guard let url = URL(string: URLs.MAIN_BANNERS_URL) else { return }
         
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
         // добавляем токен
         let token = Storage.sharedInstance.accessToken
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-
-            Task {
-                do {
-                    let (data, _) = try await URLSession.shared.data(for: request)
-
-                    // Декодируем массив категорий
-                    let bannerMovies = try JSONDecoder().decode([Banner].self, from: data)
-
-                    // Обновляем UI
+        
+        Task {
+            do {
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                // Декодируем массив категорий
+                let bannerMovies = try JSONDecoder().decode([Banner].self, from: data)
+                
+                // Обновляем UI
+                
+                await MainActor.run {
                     
-                    await MainActor.run {
-                       
-                        self.bannerMovies = bannerMovies
-                       
-                        let row = HomeRow.bannerMovies(bannerMovies)
-                        rows.insert(row, at: 0)
-
-                        self.tableView.reloadData()
-                    }
-
-                } catch {
-                    print("Ошибка:", error)
+                    self.bannerMovies = bannerMovies
+                    
+                    let row = HomeRow.bannerMovies(bannerMovies)
+                    rows.insert(row, at: 0)
+                    
+                    self.tableView.reloadData()
                 }
+                
+            } catch {
+                print("Ошибка:", error)
             }
+        }
     }
     
     func genresDownloadData() {
@@ -161,7 +160,7 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate {
     }
     
     func moviesByCategoriesDownloadData() {
-
+        
         guard let url = URL(string: URLs.MOVIES_BY_CATEGORIES_URL) else { return }
         
         var request = URLRequest(url: url)
@@ -176,13 +175,13 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
                 // Декодируем массив жанров
-                let categories: [Category] = try JSONDecoder().decode([Category].self, from: data)
+                let categories: [MainPageCategory] = try JSONDecoder().decode([MainPageCategory].self, from: data)
                 
                 // Обновляем UI
                 await MainActor.run {
                     for (index, category) in categories.enumerated() {
                         let categoryRow = HomeRow.movies(categoryName: category.categoryName, movies: category.movies)
-
+                        
                         let insertIndex: Int
                         if index == 0 {
                             // первая категория — после баннеров
@@ -191,10 +190,10 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate {
                             // остальные — после жанров (то есть после второй строки)
                             insertIndex = min(3 + index - 1, self.rows.count)
                         }
-
+                        
                         self.rows.insert(categoryRow, at: insertIndex)
                     }
-
+                    
                     self.tableView.reloadData()
                 }
                 
@@ -236,6 +235,70 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate {
             }
         }
     }
+    
+    func allMoviesDownloadData() {
+        guard let url = URL(string: URLs.ALL_MOVIES_URL) else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        // добавляем токен
+        let token = Storage.sharedInstance.accessToken
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        Task {
+            do {
+                let (data, _) = try await URLSession.shared.data(for: request)
+                
+                // Декодируем массив фильмов
+                let movies = try JSONDecoder().decode([Movie].self, from: data)
+                
+                // Присваиваем в свойство класса
+                await MainActor.run {
+                    self.allMovies = movies
+                    print("Загружено фильмов: \(movies.count)")
+                }
+            } catch {
+                print("Ошибка загрузки всех фильмов:", error)
+            }
+        }
+    }
+    
+    func mainTableViewCellDidTapAll(_ cell: MainTableViewCell, categoryName: String, movies: [Movie]) {
+        
+        let vc = MoviesListTableViewController()
+        vc.categoryName = categoryName
+        vc.movies = movies
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func genreTableViewCell(_ cell: GenreTableViewCell, didSelect genre: Genre) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        // Проверяем, что это строка жанров или возрастных категорий
+        guard case .genres(_, let title) = rows[indexPath.row] else { return }
+        
+        let filteredMovies: [Movie]
+        
+        if title == "Жанрды таңдаңыз" {
+            filteredMovies = allMovies.filter { movie in
+                movie.genres?.contains(where: { $0.id == genre.id }) ?? false
+            }
+        } else if title == "Жасына сәйкес" {
+            filteredMovies = allMovies.filter { movie in
+                movie.categoryAges?.contains(where: { $0.id == genre.id }) ?? false
+            }
+        } else {
+            filteredMovies = []
+        }
+        
+        // Переходим на экран со списком фильмов
+        let vc = MoviesListTableViewController()
+        vc.categoryName = genre.name
+        vc.movies = filteredMovies
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource, MainBannerTableViewCellDelegate {
@@ -257,7 +320,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, MainBa
                 withIdentifier: MainTableViewCell.identifier,
                 for: indexPath
             ) as! MainTableViewCell
-            cell.configure(categoryName: categoryName, movies: movies)
+            cell.configure(categoryName: categoryName , movies: movies)
             cell.delegate = self
             return cell
         
@@ -265,6 +328,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, MainBa
         case .genres(let items, let title):
             let cell = tableView.dequeueReusableCell(withIdentifier: GenreTableViewCell.identifier, for: indexPath) as! GenreTableViewCell
             cell.configure(with: items, title: title)
+            cell.delegate = self
             return cell
         }
     }
@@ -275,11 +339,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, MainBa
             case .genres: return 184
             }
         }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//            let detailVC = MovieDetailViewController()
-//            navigationController?.pushViewController(detailVC, animated: true)
-//    }
     
     func mainBannerTableViewCell(_ cell: MainBannerTableViewCell, didSelect banner: Banner) {
         print("Выбран баннер с id:", banner.id)

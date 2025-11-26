@@ -17,5 +17,10 @@ struct URLs {
     static let GENRES_URL = BASE_URL + "genres"
     static let CATEGORY_AGES_URL = BASE_URL + "category-ages"
     static let MOVIE_BY_ID_URL = BASE_URL + "movies/"
+    static let ALL_MOVIES_URL = BASE_URL + "movies"
+    static let CATEGORIES_URL = BASE_URL + "categories"
+    static let ADD_TO_FAVORITE = BASE_URL + "favorite"
+    static let REMOVE_FROM_FAVORITE = BASE_URL + "favorite/"
+    static let GET_FAVORITES = BASE_URL + "favorite/"
     
 }

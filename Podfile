@@ -11,5 +11,6 @@ target 'OzincheMy' do
   pod 'SVProgressHUD'
   pod 'SDWebImage'
   pod 'SnapKit'
+  pod 'youtube-ios-player-helper'
   
 end

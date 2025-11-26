@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8C8CF0F062CF274134FB4579 /* Pods_OzincheMy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E43D74D0335F953C8D6DDD3 /* Pods_OzincheMy.framework */; };
+		F706C51A2ECDC34300A45593 /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F706C5192ECDC34300A45593 /* MoviesListViewController.swift */; };
 		F7489CDA2ECAF37000CAF0AA /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7489CD92ECAF37000CAF0AA /* PlayerViewController.swift */; };
 		F76C065F2EC3043500EC99A8 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F76C061F2EC3043500EC99A8 /* SF-Pro-Display-Bold.otf */; };
 		F76C06602EC3043500EC99A8 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = F76C06202EC3043500EC99A8 /* SF-Pro-Display-Medium.otf */; };
@@ -62,6 +63,8 @@
 		F76C06922EC3043500EC99A8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C065B2EC3043500EC99A8 /* TabBarViewController.swift */; };
 		F76C06932EC3043500EC99A8 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C065C2EC3043500EC99A8 /* ThemeManager.swift */; };
 		F76C06942EC3043500EC99A8 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C065D2EC3043500EC99A8 /* URLs.swift */; };
+		F777DA322ED5945600326342 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F777DA312ED5943800326342 /* FavoritesService.swift */; };
+		F786F5C62ECC62B80084B6D9 /* Extension Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = F786F5C52ECC62A70084B6D9 /* Extension Int.swift */; };
 		F7DAECA32E0EC09B0048405D /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = F7DAECA22E0EC09B0048405D /* Localize_Swift */; };
 		F7E8529A2EC4916F00FAF3B1 /* Extension UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E852992EC4914500FAF3B1 /* Extension UILabel.swift */; };
 /* End PBXBuildFile section */
@@ -70,6 +73,7 @@
 		1E43D74D0335F953C8D6DDD3 /* Pods_OzincheMy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OzincheMy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		47E806CE44AB88BC834EA828 /* Pods-OzincheMy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OzincheMy.debug.xcconfig"; path = "Target Support Files/Pods-OzincheMy/Pods-OzincheMy.debug.xcconfig"; sourceTree = "<group>"; };
 		8204C01BDD24A9EF01249EEE /* Pods-OzincheMy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OzincheMy.release.xcconfig"; path = "Target Support Files/Pods-OzincheMy/Pods-OzincheMy.release.xcconfig"; sourceTree = "<group>"; };
+		F706C5192ECDC34300A45593 /* MoviesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
 		F723237B2D68882500A6575B /* OzincheMy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OzincheMy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7489CD92ECAF37000CAF0AA /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		F76C06182EC3043500EC99A8 /* Extension String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension String.swift"; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 		F76C065B2EC3043500EC99A8 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F76C065C2EC3043500EC99A8 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		F76C065D2EC3043500EC99A8 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
+		F777DA312ED5943800326342 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
+		F786F5C52ECC62A70084B6D9 /* Extension Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension Int.swift"; sourceTree = "<group>"; };
 		F7E852992EC4914500FAF3B1 /* Extension UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension UILabel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,6 +204,7 @@
 				F76C061B2EC3043500EC99A8 /* Extension UIStackView.swift */,
 				F76C061C2EC3043500EC99A8 /* Extension UiView.swift */,
 				F76C061D2EC3043500EC99A8 /* Extension UIViewController.swift */,
+				F786F5C52ECC62A70084B6D9 /* Extension Int.swift */,
 				F7E852992EC4914500FAF3B1 /* Extension UILabel.swift */,
 			);
 			path = Extensions;
@@ -244,9 +251,9 @@
 		F76C06362EC3043500EC99A8 /* SeriesAndSeasonsViewController */ = {
 			isa = PBXGroup;
 			children = (
-				F76C06332EC3043500EC99A8 /* SeasonsAndSeriesCollectionViewCell.swift */,
-				F76C06342EC3043500EC99A8 /* SeasonSeriesTableViewCell.swift */,
 				F76C06352EC3043500EC99A8 /* SeriesAndSeasonsViewController.swift */,
+				F76C06342EC3043500EC99A8 /* SeasonSeriesTableViewCell.swift */,
+				F76C06332EC3043500EC99A8 /* SeasonsAndSeriesCollectionViewCell.swift */,
 			);
 			path = SeriesAndSeasonsViewController;
 			sourceTree = "<group>";
@@ -286,8 +293,8 @@
 		F76C06442EC3043500EC99A8 /* SearchController */ = {
 			isa = PBXGroup;
 			children = (
-				F76C06422EC3043500EC99A8 /* SearchCollectionViewCell.swift */,
 				F76C06432EC3043500EC99A8 /* SearchViewController.swift */,
+				F76C06422EC3043500EC99A8 /* SearchCollectionViewCell.swift */,
 			);
 			path = SearchController;
 			sourceTree = "<group>";
@@ -318,6 +325,7 @@
 				F76C064B2EC3043500EC99A8 /* AppDelegate.swift */,
 				F76C064C2EC3043500EC99A8 /* Assets.xcassets */,
 				F76C064D2EC3043500EC99A8 /* FavoriteViewController.swift */,
+				F777DA312ED5943800326342 /* FavoritesService.swift */,
 				F76C064E2EC3043500EC99A8 /* Info.plist */,
 				F76C06522EC3043500EC99A8 /* LaunchScreen.storyboard */,
 				F76C06562EC3043500EC99A8 /* Localizable.strings */,
@@ -325,6 +333,7 @@
 				F76C06582EC3043500EC99A8 /* PaddedTextField.swift */,
 				F76C06592EC3043500EC99A8 /* SceneDelegate.swift */,
 				F76C065A2EC3043500EC99A8 /* Storage.swift */,
+				F706C5192ECDC34300A45593 /* MoviesListViewController.swift */,
 				F76C065B2EC3043500EC99A8 /* TabBarViewController.swift */,
 				F76C065C2EC3043500EC99A8 /* ThemeManager.swift */,
 				F76C065D2EC3043500EC99A8 /* URLs.swift */,
@@ -441,9 +450,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-OzincheMy/Pods-OzincheMy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-OzincheMy/Pods-OzincheMy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -464,6 +477,7 @@
 				F76C066B2EC3043500EC99A8 /* Extension UiView.swift in Sources */,
 				F76C066C2EC3043500EC99A8 /* Extension UIViewController.swift in Sources */,
 				F76C066D2EC3043500EC99A8 /* BannerCollectionViewCell.swift in Sources */,
+				F706C51A2ECDC34300A45593 /* MoviesListViewController.swift in Sources */,
 				F76C066E2EC3043500EC99A8 /* GenreCollectionViewCell.swift in Sources */,
 				F76C066F2EC3043500EC99A8 /* GenreTableViewCell.swift in Sources */,
 				F7E8529A2EC4916F00FAF3B1 /* Extension UILabel.swift in Sources */,
@@ -495,11 +509,13 @@
 				F76C06882EC3043500EC99A8 /* OnBoardingSlide.swift in Sources */,
 				F76C06892EC3043500EC99A8 /* OnBoardingViewController.swift in Sources */,
 				F76C068A2EC3043500EC99A8 /* SignInViewController.swift in Sources */,
+				F777DA322ED5945600326342 /* FavoritesService.swift in Sources */,
 				F76C068B2EC3043500EC99A8 /* SignUpViewController.swift in Sources */,
 				F76C068C2EC3043500EC99A8 /* AppDelegate.swift in Sources */,
 				F76C068D2EC3043500EC99A8 /* FavoriteViewController.swift in Sources */,
 				F76C068E2EC3043500EC99A8 /* MoviesTableViewCell.swift in Sources */,
 				F76C068F2EC3043500EC99A8 /* PaddedTextField.swift in Sources */,
+				F786F5C62ECC62B80084B6D9 /* Extension Int.swift in Sources */,
 				F76C06902EC3043500EC99A8 /* SceneDelegate.swift in Sources */,
 				F76C06912EC3043500EC99A8 /* Storage.swift in Sources */,
 				F76C06922EC3043500EC99A8 /* TabBarViewController.swift in Sources */,

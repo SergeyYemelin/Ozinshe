@@ -37,10 +37,10 @@ class MainCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let subtitleLabel = {
+    let subTitleLabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "Мультсериал"
+        label.text = ""
         label.textColor = UIColor(red: 0.61, green: 0.64, blue: 0.69, alpha: 1)
         label.font = UIFont(name: "SFProDisplay-Regular", size: 12)
         
@@ -64,7 +64,7 @@ class MainCollectionViewCell: UICollectionViewCell {
     
     func setupUI() {
         
-        contentView.addSubviews(imageView, titleLabel, subtitleLabel)
+        contentView.addSubviews(imageView, titleLabel, subTitleLabel)
         
         imageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -79,7 +79,7 @@ class MainCollectionViewCell: UICollectionViewCell {
             make.right.equalToSuperview()
             make.top.equalTo(imageView.snp.bottom).offset(8)
     }
-        subtitleLabel.snp.makeConstraints { make in
+        subTitleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
@@ -91,10 +91,11 @@ class MainCollectionViewCell: UICollectionViewCell {
            delegate?.mainCollectionViewCellDidTap(self)
        }
     
-    func configure(with movies: Movie) {
-        titleLabel.text = movies.name
+    func configure(with movie: Movie) {
+        titleLabel.text = movie.name
+        subTitleLabel.text = movie.categories?.map { $0.name }.joined(separator: ", ") ?? ""
 
-        if let posterString = movies.poster?.link {
+        if let posterString = movie.poster?.link {
             let fixedURLString = posterString.replacingOccurrences(
                 of: "api.ozinshe.com",
                 with: "apiozinshe.mobydev.kz"

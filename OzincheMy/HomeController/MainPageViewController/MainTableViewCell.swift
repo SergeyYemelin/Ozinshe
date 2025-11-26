@@ -10,6 +10,7 @@ import SDWebImage
 
 protocol MainTableViewCellDelegate: AnyObject {
     func mainTableViewCell(_ cell: MainTableViewCell, didSelect movie: Movie)
+    func mainTableViewCellDidTapAll(_ cell: MainTableViewCell, categoryName: String, movies: [Movie])
 }
 
 class MainTableViewCell: UITableViewCell, MainCollectionViewCellDelegate {
@@ -24,6 +25,8 @@ class MainTableViewCell: UITableViewCell, MainCollectionViewCellDelegate {
                 mainCollection.layoutIfNeeded()
             }
         }
+    
+    var categoryName: String?
     
     let mainCollection: UICollectionView = {
         let layout = TopAlignedCollectionViewFlowLayout()
@@ -53,14 +56,26 @@ class MainTableViewCell: UITableViewCell, MainCollectionViewCellDelegate {
         return label
     }()
     
-    let allLabel: UILabel = {
-        let label = UILabel()
+    lazy var allButton: UIButton = {
+        let button = UIButton(type: .system)
+
+        // Текст как у лейбла
+        button.setTitle("Барлығы", for: .normal)
+        button.titleLabel?.font = UIFont(name: "SFProDisplay-Semibold", size: 14)
+
+        // Цвет текста как у твоего лейбла
+        button.setTitleColor(
+            UIColor(red: 0.702, green: 0.463, blue: 0.969, alpha: 1),
+            for: .normal
+        )
+
+        // Убираем стиль системной кнопки, чтобы выглядела как лейбл
+        button.backgroundColor = .clear
+        button.tintColor = .clear
         
-        label.text = "Барлығы"
-        label.font = UIFont(name: "SFProDisplay-Semibold", size: 14)
-        label.textColor = UIColor(red: 0.702, green: 0.463, blue: 0.969, alpha: 1)
-        
-        return label
+        button.addTarget(self, action: #selector(allButtonTapped), for: .touchUpInside)
+
+        return button
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -79,7 +94,7 @@ class MainTableViewCell: UITableViewCell, MainCollectionViewCellDelegate {
     func setupUI() {
         contentView.backgroundColor = UIColor(named: "FFFFFF-111827")
         
-        contentView.addSubviews(mainCollection, titleLabel, allLabel)
+        contentView.addSubviews(mainCollection, titleLabel, allButton)
         
         mainCollection.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
@@ -93,16 +108,22 @@ class MainTableViewCell: UITableViewCell, MainCollectionViewCellDelegate {
             make.left.equalToSuperview().inset(24)
         }
         
-        allLabel.snp.makeConstraints { make in
+        allButton.snp.makeConstraints { make in
             make.right.equalToSuperview().inset(24)
             make.centerY.equalTo(titleLabel)
         }
     }
     
     func configure(categoryName: String, movies: [Movie]) {
-        titleLabel.text = categoryName        // 🟣 Название категории
-        self.movies = movies           // 🟢 Сохраняем фильмы
-        mainCollection.reloadData()    // 🔄 Обновляем коллекцию
+        titleLabel.text = categoryName
+        self.movies = movies
+        self.categoryName = categoryName
+        mainCollection.reloadData()
+    }
+    
+    @objc func allButtonTapped() {
+        guard let categoryName = categoryName else { return }
+        delegate?.mainTableViewCellDidTapAll(self, categoryName: categoryName, movies: movies)
     }
 }
 
@@ -118,7 +139,7 @@ extension MainTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
             for: indexPath
         ) as! MainCollectionViewCell
         
-        cell.delegate = self  // 🔹 ВАЖНО: подключаем делегат!
+        cell.delegate = self
         
         let movie = movies[indexPath.item]
         cell.configure(with: movie)

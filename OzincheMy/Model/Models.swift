@@ -5,7 +5,7 @@
 //  Created by Сергей Емелин on 06.11.2025.
 //
 
-struct Category: Decodable {
+struct MainPageCategory: Decodable {
     let categoryId: Int
     let categoryName: String
     let movies: [Movie]
@@ -28,7 +28,7 @@ struct Movie: Decodable {
     let seasonCount: Int?
     let seriesCount: Int?
     let watchCount: Int?
-    let favorite: Bool
+    var favorite: Bool
     let timing: Int?
 }
 
@@ -40,6 +40,7 @@ struct Poster: Decodable {
 }
 
 struct Genre: Decodable {
+    let id: Int
     let name: String
     let link: String?
 }
@@ -67,6 +68,11 @@ struct SimilarMovie {
     let imageName: String
     let title: String
     let subtitle: String
+}
+
+struct Category: Decodable {
+    let id: Int
+    let name: String
 }
 
 

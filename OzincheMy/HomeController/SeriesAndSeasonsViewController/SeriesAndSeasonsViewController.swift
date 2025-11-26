@@ -12,6 +12,7 @@ import SwiftyJSON
 
 class SeriesAndSeasonsViewController: UIViewController {
 
+    var movie: Movie?
     var currentSeason = 0
 
     //MARK: UI Elements
@@ -27,7 +28,6 @@ class SeriesAndSeasonsViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(SeasonsAndSeriesCollectionViewCell.self, forCellWithReuseIdentifier: "SeasonCell")
         collectionView.showsHorizontalScrollIndicator = false
-        
         collectionView.backgroundColor =  UIColor(named: "FFFFFF-111827")
         
         return collectionView
@@ -82,13 +82,13 @@ class SeriesAndSeasonsViewController: UIViewController {
 extension SeriesAndSeasonsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return movie?.seasonCount ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonCell", for: indexPath) as! SeasonsAndSeriesCollectionViewCell
         
-        cell.seasonLabel.text = "\(1...5) сезон"
+        cell.seasonLabel.text = "\(indexPath.item + 1)-ші сезон"
         
         cell.backView.layer.cornerRadius = 8
         
@@ -97,26 +97,42 @@ extension SeriesAndSeasonsViewController: UICollectionViewDelegate, UICollection
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-
+        currentSeason = indexPath.item + 1
+        seriesTableView.reloadData()
     }
     
     // MARK: - Table view data source
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return movie?.seriesCount ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SeriesCell", for: indexPath) as! SeasonSeriesTableViewCell
         
-        cell.seriesLabel.text = " \(1...5)-ші бөлім"
+        cell.seriesLabel.text = "\(indexPath.row + 1)-ші бөлім"
+        
+        if let posterString = movie?.poster?.link {
+                
+                let fixedURLString = posterString.replacingOccurrences(
+                    of: "api.ozinshe.com",
+                    with: "apiozinshe.mobydev.kz"
+                )
+                
+                if let url = URL(string: fixedURLString) {
+                    cell.seriesImage.sd_imageTransition = .fade
+                    cell.seriesImage.sd_setImage(
+                        with: url,
+                        placeholderImage: nil,
+                        options: [.continueInBackground, .retryFailed]
+                    )
+                }
+            }
         
         cell.seriesImage.layer.cornerRadius = 12
-        
-//        cell.seriesImage.image = UIImage(named: movies[indexPath.row].imageName)
         
         return cell
     }

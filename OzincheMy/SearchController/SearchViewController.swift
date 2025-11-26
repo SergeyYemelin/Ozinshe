@@ -29,7 +29,10 @@ class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
 class SearchViewController: UIViewController {
     
-    let categoriesArray = ["Телехикая", "Ситком", "Көркем фильм", "Мультфильм", "Мультсериал", "Аниме", "Тв-бағдарлама және реалити-шоу", "Деректі фильм", "Музыка", "Шетел фильмдері"]
+    var categoriesArray: [Category] = []
+    
+    var allMovies: [Movie] = []
+    var searchResults: [Movie] = []
 
     //MARK: - UIElements
     
@@ -84,9 +87,8 @@ class SearchViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 16, left: 24, bottom: 16, right: 24)
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 8
-        layout.itemSize = CGSize(width: 128, height: 34)
-        layout.estimatedItemSize.width = 100
-        
+//        layout.itemSize = CGSize(width: 128, height: 34)
+        layout.estimatedItemSize = CGSize(width: 100, height: 34)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor(named: "FFFFFF-111827")
@@ -127,7 +129,7 @@ class SearchViewController: UIViewController {
         
         setupUI()
         
-        downloadSearchMovies()
+//        downloadSearchMovies()
         hideKeyboardWhenTappedArround()
         
         searchTextField.delegate = self
@@ -139,6 +141,10 @@ class SearchViewController: UIViewController {
                                                    selector: #selector(localizeLanguage),
                                                    name: NSNotification.Name("languageChanged"),
                                                    object: nil)
+        downloadCategories()
+        allMoviesDownloadData()
+        downloadSearchMovies()
+        
     }
     
     deinit {
@@ -177,12 +183,60 @@ class SearchViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(tableView.snp.top)
+//            make.bottom.equalTo(tableView.snp.top)
             make.height.equalTo(340)
         }
         
         tableView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    //Download allMovies
+    
+    func allMoviesDownloadData() {
+        guard let url = URL(string: URLs.ALL_MOVIES_URL) else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let token = Storage.sharedInstance.accessToken
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        Task {
+            do {
+                let (data, _) = try await URLSession.shared.data(for: request)
+                let movies = try JSONDecoder().decode([Movie].self, from: data)
+                
+                await MainActor.run {
+                    self.allMovies = movies
+                }
+            } catch {
+                print("Ошибка загрузки всех фильмов:", error)
+            }
+        }
+    }
+    
+    func downloadCategories() {
+        guard let url = URL(string: "http://apiozinshe.mobydev.kz/core/V1/categories") else { return }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        let token = Storage.sharedInstance.accessToken
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+
+        Task {
+            do {
+                let (data, _) = try await URLSession.shared.data(for: request)
+                let categories = try JSONDecoder().decode([Category].self, from: data)
+                
+                await MainActor.run {
+                    self.categoriesArray = categories
+                    self.collectionView.reloadData()
+                }
+            } catch {
+                print("Ошибка загрузки категорий:", error)
+            }
         }
     }
     
@@ -208,35 +262,70 @@ class SearchViewController: UIViewController {
     //MARK: - Methods
     
     func downloadSearchMovies() {
-        if searchTextField.text!.isEmpty {
-            titleLabel.text = "CATEGORIES_LABEL".localized()
+        let isSearching = !(searchTextField.text?.isEmpty ?? true)
+        
+        if isSearching {
+            // Показываем таблицу
+            
+            collectionView.isHidden = true
+            tableView.isHidden = false
+            
+            collectionView.snp.removeConstraints()
+            
+            tableView.snp.remakeConstraints { make in
+                make.top.equalTo(titleLabel.snp.bottom).offset(10)
+                make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            }
+        } else {
+            // Показываем коллекцию
             collectionView.isHidden = false
             tableView.isHidden = true
-//            movies.removeAll()
-            tableView.reloadData()
-            exitButton.isHidden = true
-            tableView.snp.remakeConstraints { (make) in
-                make.top.equalTo(collectionView.snp.bottom)
-                make.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            }
-            return
-        } else {
-            titleLabel.text = "SEARCH_RESULTS_LABEL".localized()
-            collectionView.isHidden = true
             
-            tableView.snp.makeConstraints { (make) in
-                make.top.equalTo(titleLabel.snp.bottom).offset(10)
-                make.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            collectionView.snp.remakeConstraints { make in
+                make.top.equalTo(titleLabel.snp.bottom)
+                make.leading.trailing.equalToSuperview()
+                make.height.equalTo(340)
             }
-            tableView.isHidden = false
-            exitButton.isHidden = false
+            
         }
+        
+        updateTitleLabel()
+        
+        // Фильтрация
+        let query = searchTextField.text?.lowercased() ?? ""
+        
+        if query.isEmpty {
+            searchResults = []
+        } else {
+            searchResults = allMovies.filter {
+                $0.name.lowercased().contains(query)
+            }
+        }
+        
+        tableView.reloadData()
     }
     
     @objc private func localizeLanguage() {
         navigationItem.title = "SEARCH_LABEL".localized()
         searchTextField.placeholder = "SEARCH_TEXTFIELD_PLACEHOLDER".localized()
         titleLabel.text = "CATEGORIES_LABEL".localized()
+    }
+    
+    func makeSubTitleText(with row: Int, movies: [Movie])-> String {
+        let movie = movies[row]
+        let year = "\(movie.year)"
+        let categoriesString = movie.categories?.map { $0.name }.joined(separator: ", ") ?? ""
+        
+        return "\(year) • \(categoriesString)"
+    }
+    
+    private func updateTitleLabel() {
+        let isSearching = !(searchTextField.text?.isEmpty ?? true)
+        if isSearching {
+            titleLabel.text = "SEARCH_RESULTS_LABEL".localized()
+        } else {
+            titleLabel.text = "CATEGORIES_LABEL".localized()
+        }
     }
 
 }
@@ -252,17 +341,52 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as! SearchCollectionViewCell
-        cell.label.text = categoriesArray[indexPath.row]
-        
+        cell.label.text = categoriesArray[indexPath.row].name
+
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let category = categoriesArray[indexPath.row]
+
+        let moviesForCategory = allMovies.filter { movie in
+            movie.categories?.contains(where: { $0.id == category.id }) ?? false
+        }
+
+        let moviesListVC = MoviesListTableViewController()
+        moviesListVC.movies = moviesForCategory
+        moviesListVC.categoryName = category.name
+
+        navigationController?.pushViewController(moviesListVC, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MoviesTableViewCell.identifier) as! MoviesTableViewCell
+        
+        let movie = searchResults[indexPath.row]
+        cell.titleLabel.text = movie.name
+        cell.subTitleLabel.text = makeSubTitleText(with: indexPath.row, movies: searchResults)
+       
+        if let posterString = movie.poster?.link {
+            let fixedURLString = posterString.replacingOccurrences(
+                of: "api.ozinshe.com",
+                with: "apiozinshe.mobydev.kz"
+            )
+
+            if let url = URL(string: fixedURLString) {
+                cell.posterImageView.sd_imageTransition = .fade
+                cell.posterImageView.sd_setImage(
+                    with: url,
+                    placeholderImage: nil,
+                    options: [.continueInBackground, .retryFailed],
+                    completed: nil
+                )
+            }
+        }
     
         return cell
     }

@@ -8,9 +8,15 @@
 import UIKit
 import SDWebImage
 
+protocol GenreTableViewCellDelegate: AnyObject {
+    func genreTableViewCell(_ cell: GenreTableViewCell, didSelect genre: Genre)
+}
+
 class GenreTableViewCell: UITableViewCell {
         
     static let identifier = "GenreCell"
+    
+    weak var delegate: GenreTableViewCellDelegate?
     
     var items: [Genre] = [] {
         didSet {
@@ -102,5 +108,10 @@ class GenreTableViewCell: UITableViewCell {
          cell.configure(with: genre)
          
          return cell
+     }
+     
+     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+         let genre = items[indexPath.item]
+         delegate?.genreTableViewCell(self, didSelect: genre)
      }
 }
