@@ -81,7 +81,7 @@ class MainBannerTableViewCell: UITableViewCell {
     
     
     func setupUI() {
-        contentView.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        contentView.backgroundColor = UIColor(named: "FFFFFF-111827")
         contentView.addSubview(bannerCollection)
         
         bannerCollection.snp.makeConstraints { (make) in
@@ -93,8 +93,8 @@ class MainBannerTableViewCell: UITableViewCell {
     }
     
     func configure(with bannerMovies: [Banner]) {
-            self.bannerMovies = bannerMovies               // сохраняем модель для этого row
-            bannerCollection.reloadData()        // и перерисовываем collection
+            self.bannerMovies = bannerMovies
+            bannerCollection.reloadData()
         }
     
 }
@@ -109,7 +109,7 @@ extension MainBannerTableViewCell: UICollectionViewDelegate, UICollectionViewDat
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCollectionViewCell
         
             let bannerMovies = bannerMovies[indexPath.item]
-            cell.configure(with: bannerMovies) // ✅ прокидываем данные отдельной ячейке коллекции
+            cell.configure(with: bannerMovies)
             return cell
     }
     

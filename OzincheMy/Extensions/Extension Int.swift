@@ -5,20 +5,42 @@
 //  Created by Сергей Емелин on 18.11.2025.
 //
 
-extension Int {
-    func declension(_ one: String, _ few: String, _ many: String) -> String {
-        let n = self
-        let mod10 = n % 10
-        let mod100 = n % 100
+import Foundation
 
-        if mod100 >= 11 && mod100 <= 14 {
-            return "\(n) \(many)"
-        } else if mod10 == 1 {
-            return "\(n) \(one)"
-        } else if mod10 >= 2 && mod10 <= 4 {
-            return "\(n) \(few)"
-        } else {
-            return "\(n) \(many)"
+extension Int {
+    func seasonText(for language: String) -> String {
+        switch language {
+        case "ru":
+            if (11...14).contains(self % 100) { return "\(self) сезонов" }
+            switch self % 10 {
+            case 1: return "\(self) сезон"
+            case 2,3,4: return "\(self) сезона"
+            default: return "\(self) сезонов"
+            }
+        case "kk":
+            return "\(self) маусым"
+        case "en":
+            return self == 1 ? "\(self) season" : "\(self) seasons"
+        default:
+            return "\(self) seasons"
+        }
+    }
+
+    func episodeText(for language: String) -> String {
+        switch language {
+        case "ru":
+            if (11...14).contains(self % 100) { return "\(self) серий" }
+            switch self % 10 {
+            case 1: return "\(self) серия"
+            case 2,3,4: return "\(self) серии"
+            default: return "\(self) серий"
+            }
+        case "kk":
+            return "\(self) серия"
+        case "en":
+            return self == 1 ? "\(self) episode" : "\(self) episodes"
+        default:
+            return "\(self) episodes"
         }
     }
 }

@@ -9,7 +9,6 @@ import UIKit
 
 extension UIImageView {
     func loadImage(from url: URL) {
-        if #available(iOS 13.0, *) {
             Task {
                 do {
                     let (data, _) = try await URLSession.shared.data(from: url)
@@ -22,8 +21,5 @@ extension UIImageView {
                     print("Ошибка загрузки изображения:", error)
                 }
             }
-        } else {
-            // Fallback on earlier versions
-        }
     }
 }

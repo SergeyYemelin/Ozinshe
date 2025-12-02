@@ -55,13 +55,33 @@ class SeriesAndSeasonsViewController: UIViewController {
         seriesTableView.delegate = self
         
         self.title = "Бөлімдер"
+        
+        let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor(named: "FFFFFF-111827")
+
+            appearance.shadowColor = .separator
+
+            navigationItem.standardAppearance = appearance
+            navigationItem.scrollEdgeAppearance = appearance
+        
+        setupBackArrow(style: .black)
         setupUI()
+        
+        localizeLanguage()
+        
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(localizeLanguage),
+                name: NSNotification.Name("languageChanged"),
+                object: nil
+            )
     }
     
     //MARK: Setup UI
     
     func setupUI() {
-        view.backgroundColor = UIColor(named: "FFFFFF - 111827")
+        view.backgroundColor = UIColor(named: "FFFFFF-111827")
         
         view.addSubviews(seriesCollectionView, seriesTableView)
         
@@ -76,7 +96,15 @@ class SeriesAndSeasonsViewController: UIViewController {
         }
     }
     
-   
+    @objc private func localizeLanguage() {
+        self.title = "TITLE".localized()
+    }
+    
+    //MARK: Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension SeriesAndSeasonsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource {
@@ -88,7 +116,8 @@ extension SeriesAndSeasonsViewController: UICollectionViewDelegate, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeasonCell", for: indexPath) as! SeasonsAndSeriesCollectionViewCell
         
-        cell.seasonLabel.text = "\(indexPath.item + 1)-ші сезон"
+        let number = indexPath.item + 1
+        cell.seasonLabel.text = String(format: "SEASON".localized(), number)
         
         cell.backView.layer.cornerRadius = 8
         
@@ -102,9 +131,6 @@ extension SeriesAndSeasonsViewController: UICollectionViewDelegate, UICollection
     }
     
     // MARK: - Table view data source
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movie?.seriesCount ?? 0
@@ -113,7 +139,8 @@ extension SeriesAndSeasonsViewController: UICollectionViewDelegate, UICollection
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SeriesCell", for: indexPath) as! SeasonSeriesTableViewCell
         
-        cell.seriesLabel.text = "\(indexPath.row + 1)-ші бөлім"
+        let number = indexPath.row + 1
+        cell.seriesLabel.text = String(format: "EPISODE_NUMBER".localized(), number)
         
         if let posterString = movie?.poster?.link {
                 
@@ -140,4 +167,5 @@ extension SeriesAndSeasonsViewController: UICollectionViewDelegate, UICollection
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 240
     }
+    
 }

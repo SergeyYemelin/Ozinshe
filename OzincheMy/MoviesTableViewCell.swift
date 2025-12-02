@@ -12,6 +12,8 @@ class MoviesTableViewCell: UITableViewCell {
 
     static let identifier = String(describing: MoviesTableViewCell.self)
     
+    var movie: Movie?
+    
     //MARK: - UI Elements
     
     lazy var posterImageView = {

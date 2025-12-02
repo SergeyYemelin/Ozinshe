@@ -59,17 +59,14 @@ class MainTableViewCell: UITableViewCell, MainCollectionViewCellDelegate {
     lazy var allButton: UIButton = {
         let button = UIButton(type: .system)
 
-        // Текст как у лейбла
         button.setTitle("Барлығы", for: .normal)
         button.titleLabel?.font = UIFont(name: "SFProDisplay-Semibold", size: 14)
 
-        // Цвет текста как у твоего лейбла
         button.setTitleColor(
             UIColor(red: 0.702, green: 0.463, blue: 0.969, alpha: 1),
             for: .normal
         )
 
-        // Убираем стиль системной кнопки, чтобы выглядела как лейбл
         button.backgroundColor = .clear
         button.tintColor = .clear
         
@@ -85,6 +82,15 @@ class MainTableViewCell: UITableViewCell, MainCollectionViewCellDelegate {
         mainCollection.delegate = self
     
         setupUI()
+        
+        localizeLanguage()
+        
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(localizeLanguage),
+                name: NSNotification.Name("languageChanged"),
+                object: nil
+            )
     }
     
     required init?(coder: NSCoder) {
@@ -125,6 +131,17 @@ class MainTableViewCell: UITableViewCell, MainCollectionViewCellDelegate {
         guard let categoryName = categoryName else { return }
         delegate?.mainTableViewCellDidTapAll(self, categoryName: categoryName, movies: movies)
     }
+    
+    @objc private func localizeLanguage() {
+       
+        allButton.setTitle("ALL_LABEL".localized(), for: .normal)
+    }
+
+    //MARK: Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension MainTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -152,6 +169,5 @@ extension MainTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
             let movie = movies[indexPath.item]
             delegate?.mainTableViewCell(self, didSelect: movie)
         }
-
 }
 

@@ -24,7 +24,6 @@ class FavoriteViewController: UITableViewController {
         
         tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
         tableView.separatorStyle = .none
-        // Do any additional setup after loading the view.
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 153
         
@@ -106,5 +105,10 @@ class FavoriteViewController: UITableViewController {
         navigationItem.title = "FAVORITE_LABEL".localized()
         
         }
-
+    
+    //MARK: Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }

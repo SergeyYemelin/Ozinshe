@@ -129,7 +129,6 @@ class SearchViewController: UIViewController {
         
         setupUI()
         
-//        downloadSearchMovies()
         hideKeyboardWhenTappedArround()
         
         searchTextField.delegate = self
@@ -146,11 +145,7 @@ class SearchViewController: UIViewController {
         downloadSearchMovies()
         
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
+
     //MARK: - UI Setup
     
     func setupUI() {
@@ -183,7 +178,6 @@ class SearchViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
             make.leading.trailing.equalToSuperview()
-//            make.bottom.equalTo(tableView.snp.top)
             make.height.equalTo(340)
         }
         
@@ -191,9 +185,7 @@ class SearchViewController: UIViewController {
             make.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-    //Download allMovies
-    
+        
     func allMoviesDownloadData() {
         guard let url = URL(string: URLs.ALL_MOVIES_URL) else { return }
         
@@ -277,7 +269,7 @@ class SearchViewController: UIViewController {
                 make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
             }
         } else {
-            // Показываем коллекцию
+
             collectionView.isHidden = false
             tableView.isHidden = true
             
@@ -291,7 +283,6 @@ class SearchViewController: UIViewController {
         
         updateTitleLabel()
         
-        // Фильтрация
         let query = searchTextField.text?.lowercased() ?? ""
         
         if query.isEmpty {
@@ -328,6 +319,11 @@ class SearchViewController: UIViewController {
         }
     }
 
+    //MARK: Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 //MARK: - UICollectionViewDataSource & UICollectionViewDelegate, UITableViewDataSource & UITableViewDelegate
@@ -394,6 +390,13 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         153
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            let movie = searchResults[indexPath.row]
+            
+            let detailVC = MovieDetailViewController(movieID: movie.id)
+            navigationController?.pushViewController(detailVC, animated: true)
+        }
 }
 
 //MARK: - UITextFieldDelegate

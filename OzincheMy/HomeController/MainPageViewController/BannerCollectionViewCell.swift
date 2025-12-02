@@ -58,7 +58,7 @@ class BannerCollectionViewCell: UICollectionViewCell {
        
         label.text = "Телехикая"
         label.font = UIFont(name: "SFProDisplay-Medium", size: 12)
-        label.textColor = UIColor(named: "FFFFFF-111827")
+        label.textColor = UIColor(named: "FFFFFF")
         
         return label
     }()
@@ -79,7 +79,7 @@ class BannerCollectionViewCell: UICollectionViewCell {
         
         titleLabel.text = nil
         subTitleLabel.text = nil
-        imageView.image = nil // чтобы не показывалась старая картинка
+        imageView.image = nil
     }
     
     //MARK: - UI Setup
@@ -135,7 +135,7 @@ class BannerCollectionViewCell: UICollectionViewCell {
             )
 
             if let url = URL(string: fixedURLString) {
-                imageView.sd_imageTransition = .fade // плавное появление
+                imageView.sd_imageTransition = .fade
                 imageView.sd_setImage(
                     with: url,
                     placeholderImage: nil,

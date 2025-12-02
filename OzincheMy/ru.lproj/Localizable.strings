@@ -6,6 +6,23 @@
   
 */
 
+//HomeViewController
+"ALL_LABEL" = "Все";
+
+//MovieDetailViewController
+"ADD_TO_LIST_LABEL" = "Добавить в список";
+"SHARE_BUTTON_LABEL" = "Поделиться";
+"DIRECTOR_LABEL" = "Режиссер:";
+"PRODUCER_LABEL" = "Продюсер:";
+"SERIES_LABEL" = "Серии";
+"SCREENSHOTS_LABEL" = "Скриншоты";
+"SIMILAR_MOVIES_LABEL" = "Похожие сериалы";
+
+//SeasonsAndSeriesViewController
+"TITLE" = "Серии";
+"EPISODE_NUMBER" = "%d серия";
+"SEASON" = "%d сезон";
+
 //ProfileViewController
 "PROFILE_TITLE" = "Профиль";
 "PROFILE_LABEL" = "Мой профиль";

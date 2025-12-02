@@ -87,6 +87,13 @@ class ProfileViewController: UIViewController {
     
     //MARK: - Lifecycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task {
+            await loadProfileAndFillUI()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -113,10 +120,6 @@ class ProfileViewController: UIViewController {
                 name: NSNotification.Name("languageChanged"),
                 object: nil
             )
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - UI Setup
@@ -307,6 +310,20 @@ class ProfileViewController: UIViewController {
         return buttons
     }
     
+    private func loadProfileAndFillUI() async {
+        do {
+            let profile = try await UserService.shared.fetchProfile()
+            await MainActor.run {
+                self.subProfileLabel.text = profile.user?.email ?? "No email"
+            }
+        } catch {
+            print("Ошибка получения профиля:", error)
+            await MainActor.run {
+                self.subProfileLabel.text = "Не удалось загрузить"
+            }
+        }
+    }
+    
     @objc private func localizeLanguage() {
         navigationItem.title = "PROFILE_TITLE".localized()
         profileLabel.text = "PROFILE_LABEL".localized()
@@ -328,6 +345,12 @@ class ProfileViewController: UIViewController {
             userInfoButtonSubLabel.text = "USER_INFO_BUTTON_SUBLABEL".localized()
             languageSublabel.text = "LANGUAGE_BUTTON_SUBLABEL".localized()
         }
+    }
+    
+    //MARK: Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

@@ -6,6 +6,23 @@
   
 */
 
+//HomeViewController
+"ALL_LABEL" = "Барлығы";
+
+//MovieDetailViewController
+"ADD_TO_LIST_LABEL" = "Тізімге қосу";
+"SHARE_BUTTON_LABEL" = "Бөлісу";
+"DIRECTOR_LABEL" = "Режиссер:";
+"PRODUCER_LABEL" = "Продюсер:";
+"SERIES_LABEL" = "Бөлімдер";
+"SCREENSHOTS_LABEL" = "Скриншоттар";
+"SIMILAR_MOVIES_LABEL" = "Ұқсас телехикаяла";
+
+//SeasonsAndSeriesViewController
+"TITLE" = "Бөлімдер";
+"EPISODE_NUMBER" = "%d-бөлім";
+"SEASON" = "%d-ші сезон";
+
 //ProfileViewController
 "PROFILE_TITLE" = "Профиль";
 "PROFILE_LABEL" = "Менің профилім";

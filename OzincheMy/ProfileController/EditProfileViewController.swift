@@ -7,9 +7,12 @@
 
 import UIKit
 import Localize_Swift
+import SVProgressHUD
 
 class EditProfileViewController: UIViewController {
 
+    private var currentProfile: UserProfileResponse?
+    
     //MARK: - UI Elements
     
     lazy var yourNameLabel = {
@@ -142,6 +145,7 @@ class EditProfileViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "SFProDisplay-Semibold", size: 16)
         button.layer.cornerRadius = 12
+        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         
         return button
         
@@ -155,14 +159,12 @@ class EditProfileViewController: UIViewController {
         view.backgroundColor = UIColor(named: "FFFFFF-111827")
 
         navigationItem.title = "Жеке деректер"
-        if #available(iOS 17.0, *) {
-            navigationItem.largeTitleDisplayMode = .inline
-        } else {
-            // Fallback on earlier versions
-        }
+        
+        navigationItem.largeTitleDisplayMode = .inline
+        
         navigationItem.hidesBackButton = true
         
-        setupBackArrow()
+        setupBackArrow(style: .black)
         setupUI()
         
         localizeLanguage()
@@ -171,12 +173,138 @@ class EditProfileViewController: UIViewController {
                                                    selector: #selector(localizeLanguage),
                                                    name: NSNotification.Name("languageChanged"),
                                                    object: nil)
-        // Do any additional setup after loading the view.
+        
+        emailTextField.isEnabled = false
+
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            Task {
+                await loadProfileAndFillUI()
+            }
+        }
+    
+    private func loadProfileAndFillUI() async {
+
+            do {
+                let profile = try await UserService.shared.fetchProfile()
+                self.currentProfile = profile
+
+                await MainActor.run {
+
+                    self.nameTextField.text = profile.name
+                    self.emailTextField.text = profile.user?.email
+                    self.phoneTextField.text = profile.phoneNumber
+                    self.birthDateTextField.text = profile.birthDate
+                }
+
+            } catch {
+                print("Ошибка получения профиля:", error)
+                await MainActor.run {
+
+                    self.showSimpleAlert(title: "Ошибка", message: "Не удалось загрузить профиль.")
+                }
+            }
+
+            DispatchQueue.main.async {
+            }
+        }
+    
+    @objc private func saveButtonTapped() {
+        Task {
+            await MainActor.run {
+                self.saveChangesButton.isEnabled = false
+            }
+
+            let name = nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let phone = phoneTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let birthDateInput = birthDateTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            guard let nameUnwrapped = name, !nameUnwrapped.isEmpty else {
+                await MainActor.run {
+                    self.showSimpleAlert(title: "Ошибка", message: "Введите имя.")
+                    self.saveChangesButton.isEnabled = true
+                }
+                return
+            }
+
+            var convertedBirthDate: String? = nil
+            if let birthDateInput, !birthDateInput.isEmpty {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd.MM.yyyy"
+                formatter.isLenient = false
+                if let date = formatter.date(from: birthDateInput) {
+
+                    let serverFormatter = DateFormatter()
+                    serverFormatter.dateFormat = "yyyy-MM-dd"
+                    convertedBirthDate = serverFormatter.string(from: date)
+                } else {
+                    await MainActor.run {
+                        self.showSimpleAlert(title: "Ошибка", message: "Введите дату в формате дд.мм.гггг")
+                        self.saveChangesButton.isEnabled = true
+                    }
+                    return
+                }
+            }
+
+            let dto = UpdateUserProfileRequest(
+                id: currentProfile?.id ?? 0,
+                name: nameUnwrapped,
+                phoneNumber: phone ?? "",
+                language: currentProfile?.language ?? "ru",
+                birthDate: convertedBirthDate ?? ""
+            )
+
+            do {
+                await MainActor.run {
+                    SVProgressHUD.show()
+                }
+
+                let updated = try await UserService.shared.updateProfile(dto)
+
+                self.currentProfile = updated
+                await MainActor.run {
+                    self.nameTextField.text = updated.name
+                    self.phoneTextField.text = updated.phoneNumber
+                    self.birthDateTextField.text = birthDateInput
+                    self.showSimpleAlert(title: "Успех", message: "Профиль обновлён.")
+                }
+
+            } catch {
+                print("Ошибка обновления профиля:", error)
+                await MainActor.run {
+                    self.showSimpleAlert(title: "Ошибка", message: "Не удалось сохранить изменения.")
+                }
+            }
+
+            await MainActor.run {
+                SVProgressHUD.dismiss()
+                self.saveChangesButton.isEnabled = true
+            }
+        }
     }
+    
+    private func convertToAPIDate(_ text: String) -> String? {
+        let input = DateFormatter()
+        input.dateFormat = "dd.MM.yyyy"
+
+        let output = DateFormatter()
+        output.dateFormat = "yyyy-MM-dd"
+
+        if let date = input.date(from: text) {
+            return output.string(from: date)
+        }
+
+        return nil
+    }
+    
+    func showSimpleAlert(title: String, message: String) {
+            let a = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            a.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(a, animated: true)
+        }
+   
     
     //MARK: - UI Setup
     
@@ -267,5 +395,10 @@ class EditProfileViewController: UIViewController {
         saveChangesButton.setTitle("SAVE_CHANGES_BUTTON".localized(), for: .normal)
         }
     
+    //MARK: Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 

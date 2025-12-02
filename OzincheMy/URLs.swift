@@ -22,5 +22,7 @@ struct URLs {
     static let ADD_TO_FAVORITE = BASE_URL + "favorite"
     static let REMOVE_FROM_FAVORITE = BASE_URL + "favorite/"
     static let GET_FAVORITES = BASE_URL + "favorite/"
-    
+    static let GET_PROFILE_URL = BASE_URL + "user/profile"
+    static let UPDATE_PROFILE_URL = BASE_URL + "user/profile/"
+    static let CHANGE_PASSWORD_URL = BASE_URL + "user/profile/changePassword"
 }

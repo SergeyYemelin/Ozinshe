@@ -7,6 +7,7 @@
 
 import UIKit
 import Localize_Swift
+import SVProgressHUD
 
 class ChangePasswordViewController: UIViewController {
     
@@ -125,6 +126,7 @@ class ChangePasswordViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "SFProDisplay-Semibold", size: 16)
         button.layer.cornerRadius = 12
+        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -145,7 +147,7 @@ class ChangePasswordViewController: UIViewController {
         }
         navigationItem.hidesBackButton = true
         
-        setupBackArrow()
+        setupBackArrow(style: .black)
         setupUi()
         localizeLanguage()
         
@@ -153,10 +155,6 @@ class ChangePasswordViewController: UIViewController {
                                                    selector: #selector(localizeLanguage),
                                                    name: NSNotification.Name("languageChanged"),
                                                    object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - UI Setup
@@ -244,6 +242,65 @@ class ChangePasswordViewController: UIViewController {
         localizeLanguage()
     }
     
+    @objc private func saveButtonTapped() {
+        Task {
+            await MainActor.run {
+                saveChangesButton.isEnabled = false
+            }
+
+            let pass = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let repeatPass = repeatPasswordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+            if pass.isEmpty || repeatPass.isEmpty {
+                await showValidationError("EMPTY_PASSWORD")
+                return
+            }
+
+            if pass != repeatPass {
+                await showValidationError("PASSWORDS_DO_NOT_MATCH")
+                return
+            }
+
+            if pass.count < 6 {
+                await showValidationError("PASSWORD_TOO_SHORT")
+                return
+            }
+            
+            let dto = ChangePasswordRequest(password: pass)
+
+            do {
+                await MainActor.run { SVProgressHUD.show() }
+                try await UserService.shared.changePassword(dto)
+
+                await MainActor.run {
+                    SVProgressHUD.dismiss()
+                    presentSimpleAlert(title: "SUCCESS_TITLE".localized(),
+                                    message: "PASSWORD_CHANGED_SUCCESS".localized())
+                }
+
+            } catch {
+                print("Ошибка смены пароля:", error)
+                
+                await MainActor.run {
+                    SVProgressHUD.dismiss()
+                    presentSimpleAlert(title: "ERROR_TITLE".localized(),
+                                    message: "PASSWORD_CHANGE_FAILED".localized())
+                }
+            }
+
+            await MainActor.run {
+                saveChangesButton.isEnabled = true
+            }
+        }
+    }
+    
+    @MainActor
+    private func showValidationError(_ key: String) async {
+        saveChangesButton.isEnabled = true
+        presentSimpleAlert(title: "ERROR_TITLE".localized(),
+                        message: key.localized())
+    }
+    
     //MARK: - Private Methods
     
     @objc func localizeLanguage() {
@@ -254,4 +311,10 @@ class ChangePasswordViewController: UIViewController {
         repeatPasswordTextField.placeholder = "REPEAT_YOUR_PASSWORD_PLACEHOLDER".localized()
         saveChangesButton.setTitle("SAVE_CHANGES_BUTTON".localized(), for: .normal)
         }
+    
+    //MARK: Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }

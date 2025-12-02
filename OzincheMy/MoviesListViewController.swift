@@ -21,6 +21,17 @@ class MoviesListTableViewController: UITableViewController {
         navigationItem.title = "Тізім"
             navigationItem.largeTitleDisplayMode = .inline
         
+        let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor(named: "FFFFFF-111827")
+
+            appearance.shadowColor = .separator
+
+            navigationItem.standardAppearance = appearance
+            navigationItem.scrollEdgeAppearance = appearance
+        
+        setupBackArrow(style: .black)
+        
         tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
         tableView.separatorStyle = .none
         // Do any additional setup after loading the view.
@@ -94,5 +105,4 @@ class MoviesListTableViewController: UITableViewController {
         navigationItem.title = "FAVORITE_LABEL".localized()
         
         }
-
 }

@@ -55,8 +55,6 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             
             image.snp.makeConstraints { make in
                 make.top.equalToSuperview()
-//                make.right.equalToSuperview()
-//                make.left.equalToSuperview()
                 make.height.equalTo(112)
                 make.width.equalTo(164)
             }

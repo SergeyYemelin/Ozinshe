@@ -95,10 +95,6 @@ class LogOutViewController: UIViewController {
                                                    object: nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     // MARK: - UI Setup
     
     func setupBackground() {
@@ -193,14 +189,10 @@ class LogOutViewController: UIViewController {
     }
     
     @objc func tappedLogOut() {
-        if #available(iOS 13.0, *) {
             if let sceneDelegate = UIApplication.shared.connectedScenes
                 .first?.delegate as? SceneDelegate {
                 sceneDelegate.showOnboardingScreen()
             }
-        } else {
-            // Fallback on earlier versions
-        }
     }
     
     @objc private func localizeLanguage() {
@@ -208,5 +200,11 @@ class LogOutViewController: UIViewController {
         logOutSubLabel.text = "LOG_OUT_SUBLABEL".localized()
         yesExitButton.setTitle("YES_EXIT_BUTTON".localized(), for: .normal)
         noExitButton.setTitle("NO_EXIT_BUTTON".localized(), for: .normal)
+    }
+    
+    //MARK: Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

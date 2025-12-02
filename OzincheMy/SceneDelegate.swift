@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let login = "testMail@gmail.com"
-        let password = "123456"
+        let password = "1234567"
 
 //        let onboardingVC = OnBoardingViewController()
 //        let navController = UINavigationController(rootViewController: onboardingVC)

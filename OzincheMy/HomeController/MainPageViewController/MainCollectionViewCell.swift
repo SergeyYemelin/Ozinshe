@@ -50,7 +50,6 @@ class MainCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        // Добавляем жест нажатия на всю ячейку
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
                 contentView.addGestureRecognizer(tapGesture)
         

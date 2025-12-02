@@ -13,7 +13,6 @@ class GenreCollectionViewCell: UICollectionViewCell {
     
     let imageView = {
         let imageView = UIImageView()
-        //        imageView.image = UIImage(named: "genreImage")
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
         

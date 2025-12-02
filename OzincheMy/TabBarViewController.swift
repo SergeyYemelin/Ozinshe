@@ -16,7 +16,7 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
 
         tabBar.backgroundColor = UIColor(named: "FFFFFF-1C2431")
-        // Do any additional setup after loading the view.
+        
         SetupTabs()
         
         appearanceObserver = registerForTraitChanges(

@@ -66,7 +66,7 @@ class HistoryTableViewCell: UITableViewCell {
         }
 
         historyCollection.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(16) // отступ вниз от лейбла
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.left.right.equalToSuperview()
             make.height.equalTo(156)
             

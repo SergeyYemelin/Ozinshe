@@ -264,7 +264,7 @@ class SignUpViewController: UIViewController {
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
-        setupBackArrow()
+        setupBackArrow(style: .black)
         
         setupUI()
         localizeLanguage()

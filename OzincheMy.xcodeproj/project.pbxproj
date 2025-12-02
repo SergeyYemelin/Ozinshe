@@ -63,8 +63,10 @@
 		F76C06922EC3043500EC99A8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C065B2EC3043500EC99A8 /* TabBarViewController.swift */; };
 		F76C06932EC3043500EC99A8 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C065C2EC3043500EC99A8 /* ThemeManager.swift */; };
 		F76C06942EC3043500EC99A8 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C065D2EC3043500EC99A8 /* URLs.swift */; };
-		F777DA322ED5945600326342 /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F777DA312ED5943800326342 /* FavoritesService.swift */; };
 		F786F5C62ECC62B80084B6D9 /* Extension Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = F786F5C52ECC62A70084B6D9 /* Extension Int.swift */; };
+		F7CD7BA82EDB4817004014DC /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD7BA72EDB4805004014DC /* UserProfile.swift */; };
+		F7CD7BAC2EDB48E7004014DC /* FavoritesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD7BAA2EDB48E7004014DC /* FavoritesService.swift */; };
+		F7CD7BAE2EDB4923004014DC /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD7BAD2EDB4911004014DC /* UserService.swift */; };
 		F7DAECA32E0EC09B0048405D /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = F7DAECA22E0EC09B0048405D /* Localize_Swift */; };
 		F7E8529A2EC4916F00FAF3B1 /* Extension UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E852992EC4914500FAF3B1 /* Extension UILabel.swift */; };
 /* End PBXBuildFile section */
@@ -134,8 +136,10 @@
 		F76C065B2EC3043500EC99A8 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F76C065C2EC3043500EC99A8 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		F76C065D2EC3043500EC99A8 /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
-		F777DA312ED5943800326342 /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
 		F786F5C52ECC62A70084B6D9 /* Extension Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension Int.swift"; sourceTree = "<group>"; };
+		F7CD7BA72EDB4805004014DC /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		F7CD7BAA2EDB48E7004014DC /* FavoritesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesService.swift; sourceTree = "<group>"; };
+		F7CD7BAD2EDB4911004014DC /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		F7E852992EC4914500FAF3B1 /* Extension UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension UILabel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -268,24 +272,25 @@
 			path = HomeController;
 			sourceTree = "<group>";
 		};
-		F76C06392EC3043500EC99A8 /* Model */ = {
+		F76C06392EC3043500EC99A8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				F76C06382EC3043500EC99A8 /* Models.swift */,
+				F7CD7BA72EDB4805004014DC /* UserProfile.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		F76C06412EC3043500EC99A8 /* ProfileController */ = {
 			isa = PBXGroup;
 			children = (
+				F76C06402EC3043500EC99A8 /* ProfileViewController.swift */,
+				F76C063C2EC3043500EC99A8 /* EditProfileViewController.swift */,
 				F76C063A2EC3043500EC99A8 /* ChangePasswordViewController.swift */,
 				F76C063B2EC3043500EC99A8 /* CustomTextField.swift */,
-				F76C063C2EC3043500EC99A8 /* EditProfileViewController.swift */,
 				F76C063D2EC3043500EC99A8 /* LanguageTableViewCell.swift */,
 				F76C063E2EC3043500EC99A8 /* LanguageViewController.swift */,
 				F76C063F2EC3043500EC99A8 /* LogOutViewController.swift */,
-				F76C06402EC3043500EC99A8 /* ProfileViewController.swift */,
 			);
 			path = ProfileController;
 			sourceTree = "<group>";
@@ -314,24 +319,24 @@
 		F76C065E2EC3043500EC99A8 /* OzincheMy */ = {
 			isa = PBXGroup;
 			children = (
+				F76C06392EC3043500EC99A8 /* Models */,
+				F7CD7BAB2EDB48E7004014DC /*  Services */,
 				F7489CD82ECAF33C00CAF0AA /* PlayerViewController */,
 				F76C061E2EC3043500EC99A8 /* Extensions */,
 				F76C06232EC3043500EC99A8 /* Fonts */,
 				F76C06372EC3043500EC99A8 /* HomeController */,
-				F76C06392EC3043500EC99A8 /* Model */,
 				F76C06412EC3043500EC99A8 /* ProfileController */,
 				F76C06442EC3043500EC99A8 /* SearchController */,
 				F76C064A2EC3043500EC99A8 /* SignInController */,
-				F76C064B2EC3043500EC99A8 /* AppDelegate.swift */,
 				F76C064C2EC3043500EC99A8 /* Assets.xcassets */,
 				F76C064D2EC3043500EC99A8 /* FavoriteViewController.swift */,
-				F777DA312ED5943800326342 /* FavoritesService.swift */,
 				F76C064E2EC3043500EC99A8 /* Info.plist */,
 				F76C06522EC3043500EC99A8 /* LaunchScreen.storyboard */,
 				F76C06562EC3043500EC99A8 /* Localizable.strings */,
 				F76C06572EC3043500EC99A8 /* MoviesTableViewCell.swift */,
-				F76C06582EC3043500EC99A8 /* PaddedTextField.swift */,
+				F76C064B2EC3043500EC99A8 /* AppDelegate.swift */,
 				F76C06592EC3043500EC99A8 /* SceneDelegate.swift */,
+				F76C06582EC3043500EC99A8 /* PaddedTextField.swift */,
 				F76C065A2EC3043500EC99A8 /* Storage.swift */,
 				F706C5192ECDC34300A45593 /* MoviesListViewController.swift */,
 				F76C065B2EC3043500EC99A8 /* TabBarViewController.swift */,
@@ -339,6 +344,15 @@
 				F76C065D2EC3043500EC99A8 /* URLs.swift */,
 			);
 			path = OzincheMy;
+			sourceTree = "<group>";
+		};
+		F7CD7BAB2EDB48E7004014DC /*  Services */ = {
+			isa = PBXGroup;
+			children = (
+				F7CD7BAA2EDB48E7004014DC /* FavoritesService.swift */,
+				F7CD7BAD2EDB4911004014DC /* UserService.swift */,
+			);
+			path = " Services";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -482,6 +496,7 @@
 				F76C066F2EC3043500EC99A8 /* GenreTableViewCell.swift in Sources */,
 				F7E8529A2EC4916F00FAF3B1 /* Extension UILabel.swift in Sources */,
 				F76C06702EC3043500EC99A8 /* HistoryCollectionViewCell.swift in Sources */,
+				F7CD7BA82EDB4817004014DC /* UserProfile.swift in Sources */,
 				F76C06712EC3043500EC99A8 /* HistoryTableViewCell.swift in Sources */,
 				F76C06722EC3043500EC99A8 /* HomeRows.swift in Sources */,
 				F76C06732EC3043500EC99A8 /* HomeViewController.swift in Sources */,
@@ -501,15 +516,16 @@
 				F76C06802EC3043500EC99A8 /* EditProfileViewController.swift in Sources */,
 				F76C06812EC3043500EC99A8 /* LanguageTableViewCell.swift in Sources */,
 				F76C06822EC3043500EC99A8 /* LanguageViewController.swift in Sources */,
+				F7CD7BAE2EDB4923004014DC /* UserService.swift in Sources */,
 				F76C06832EC3043500EC99A8 /* LogOutViewController.swift in Sources */,
 				F76C06842EC3043500EC99A8 /* ProfileViewController.swift in Sources */,
 				F76C06852EC3043500EC99A8 /* SearchCollectionViewCell.swift in Sources */,
 				F76C06862EC3043500EC99A8 /* SearchViewController.swift in Sources */,
 				F76C06872EC3043500EC99A8 /* OnBoardingCell.swift in Sources */,
+				F7CD7BAC2EDB48E7004014DC /* FavoritesService.swift in Sources */,
 				F76C06882EC3043500EC99A8 /* OnBoardingSlide.swift in Sources */,
 				F76C06892EC3043500EC99A8 /* OnBoardingViewController.swift in Sources */,
 				F76C068A2EC3043500EC99A8 /* SignInViewController.swift in Sources */,
-				F777DA322ED5945600326342 /* FavoritesService.swift in Sources */,
 				F76C068B2EC3043500EC99A8 /* SignUpViewController.swift in Sources */,
 				F76C068C2EC3043500EC99A8 /* AppDelegate.swift in Sources */,
 				F76C068D2EC3043500EC99A8 /* FavoriteViewController.swift in Sources */,
@@ -562,8 +578,8 @@
 				INFOPLIST_FILE = OzincheMy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -594,8 +610,8 @@
 				INFOPLIST_FILE = OzincheMy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

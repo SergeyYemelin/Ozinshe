@@ -67,7 +67,7 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
     
     func addNavBarImage() {
         
-        let image = UIImage(named: "logotipImage")
+        let image = UIImage(named: "logoMainPage")
         
         let logoImageView = UIImageView(image: image)
         
@@ -76,7 +76,7 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
     }
     
     func setupUi() {
-        view.backgroundColor = UIColor(named: "ViewBackGroundColor")
+        view.backgroundColor = UIColor(named: "FFFFFF-111827")
         view.addSubview(tableView)
         
         tableView.delegate = self
@@ -97,18 +97,14 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        // добавляем токен
         let token = Storage.sharedInstance.accessToken
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         Task {
             do {
                 let (data, _) = try await URLSession.shared.data(for: request)
-                
-                // Декодируем массив категорий
+
                 let bannerMovies = try JSONDecoder().decode([Banner].self, from: data)
-                
-                // Обновляем UI
                 
                 await MainActor.run {
                     
@@ -132,7 +128,6 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        // добавляем токен
         let token = Storage.sharedInstance.accessToken
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
@@ -140,14 +135,12 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
             do {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
-                // Декодируем массив жанров
                 let genres = try JSONDecoder().decode([Genre].self, from: data)
                 
-                // Обновляем UI
                 await MainActor.run {
                     self.genres = genres
                     
-                    let index = min(1, rows.count) // безопасно
+                    let index = min(1, rows.count)
                     self.rows.insert(.genres(items: genres, title: "Жанрды таңдаңыз"), at: index)
                     
                     self.tableView.reloadData()
@@ -166,7 +159,6 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        // добавляем токен
         let token = Storage.sharedInstance.accessToken
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
@@ -174,20 +166,16 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
             do {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
-                // Декодируем массив жанров
                 let categories: [MainPageCategory] = try JSONDecoder().decode([MainPageCategory].self, from: data)
                 
-                // Обновляем UI
                 await MainActor.run {
                     for (index, category) in categories.enumerated() {
                         let categoryRow = HomeRow.movies(categoryName: category.categoryName, movies: category.movies)
                         
                         let insertIndex: Int
                         if index == 0 {
-                            // первая категория — после баннеров
                             insertIndex = min(1, self.rows.count)
                         } else {
-                            // остальные — после жанров (то есть после второй строки)
                             insertIndex = min(3 + index - 1, self.rows.count)
                         }
                         
@@ -209,7 +197,6 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        // добавляем токен
         let token = Storage.sharedInstance.accessToken
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
@@ -217,14 +204,12 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
             do {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
-                // Декодируем массив жанров
                 let categoryAge = try JSONDecoder().decode([Genre].self, from: data)
                 
-                // Обновляем UI
                 await MainActor.run {
                     self.categoriesAge = categoryAge
                     
-                    let index = min(5, rows.count) // безопасно
+                    let index = min(5, rows.count)
                     self.rows.insert(.genres(items: categoriesAge, title: "Жасына сәйкес"), at: index)
                     
                     self.tableView.reloadData()
@@ -242,7 +227,6 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        // добавляем токен
         let token = Storage.sharedInstance.accessToken
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
@@ -250,10 +234,8 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
             do {
                 let (data, _) = try await URLSession.shared.data(for: request)
                 
-                // Декодируем массив фильмов
                 let movies = try JSONDecoder().decode([Movie].self, from: data)
                 
-                // Присваиваем в свойство класса
                 await MainActor.run {
                     self.allMovies = movies
                     print("Загружено фильмов: \(movies.count)")
@@ -276,7 +258,6 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
     func genreTableViewCell(_ cell: GenreTableViewCell, didSelect genre: Genre) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-        // Проверяем, что это строка жанров или возрастных категорий
         guard case .genres(_, let title) = rows[indexPath.row] else { return }
         
         let filteredMovies: [Movie]
@@ -293,7 +274,6 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
             filteredMovies = []
         }
         
-        // Переходим на экран со списком фильмов
         let vc = MoviesListTableViewController()
         vc.categoryName = genre.name
         vc.movies = filteredMovies

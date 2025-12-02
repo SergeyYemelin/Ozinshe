@@ -271,7 +271,7 @@ class SignInViewController: UIViewController {
         emailTextField.delegate = self
         passwordTextField.delegate = self
 
-        setupBackArrow()
+        setupBackArrow(style: .black)
         
         setupUI()
         localizeLanguage()

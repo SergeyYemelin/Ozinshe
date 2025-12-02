@@ -6,6 +6,23 @@
   
 */
 
+//HomeViewController
+"ALL_LABEL" = "All";
+
+//MovieDetailViewController
+"ADD_TO_LIST_LABEL" = "Add to list";
+"SHARE_BUTTON_LABEL" = "Sharing";
+"DIRECTOR_LABEL" = "Director:";
+"PRODUCER_LABEL" = "Producer:";
+"SERIES_LABEL" = "Series";
+"SCREENSHOTS_LABEL" = "Screenshots";
+"SIMILAR_MOVIES_LABEL" = "Similar TV series";
+
+//SeasonsAndSeriesViewController
+"TITLE" = "Series";
+"EPISODE_NUMBER" = "Episode %d";
+"SEASON" = "Season %d";
+
 //ProfileViewController
 "PROFILE_TITLE" = "Profile";
 "PROFILE_LABEL" = "My profile";

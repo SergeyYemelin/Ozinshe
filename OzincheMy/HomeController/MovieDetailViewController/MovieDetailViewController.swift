@@ -32,7 +32,6 @@ class MovieDetailViewController: UIViewController {
         SimilarMovie(imageName: "similarImage3", title: "Каникулы off-line 2", subtitle: "Телехикая"),
     ]
     
-    // ✅ Создаем инициализатор, который принимает movieID
     init(movieID: Int) {
         self.movieID = movieID
         super.init(nibName: nil, bundle: nil)
@@ -93,13 +92,11 @@ class MovieDetailViewController: UIViewController {
         button.setImage(UIImage(named: "PlayButtonImage"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         
-        // Создаем дополнительный UIImageView
         let playView = UIImageView()
         playView.image = UIImage(named: "playView")
         playView.contentMode = .scaleAspectFit
         playView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Добавляем внутрь кнопки
         button.addSubview(playView)
         
         playView.snp.makeConstraints { (make) in
@@ -179,19 +176,18 @@ class MovieDetailViewController: UIViewController {
         label.numberOfLines = 0
         
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 12 // расстояние между строками
+        paragraphStyle.lineSpacing = 12
         
         let attributedString = NSAttributedString(
             string: text,
             attributes: [
-                .paragraphStyle: paragraphStyle, // межстрочный интервал
-                .kern: 0.5 // расстояние между буквами
+                .paragraphStyle: paragraphStyle,
+                .kern: 0.5
             ]
         )
         
         label.attributedText = attributedString
         
-        // ✅ Добавляем приоритеты
         label.setContentHuggingPriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         return label
@@ -262,7 +258,7 @@ class MovieDetailViewController: UIViewController {
         return view
     }()
     
-    let seasonsLabel = {
+    let seriesLabel = {
         let label = UILabel()
         label.text = "Бөлімдер"
         label.textColor = UIColor(named: "111827-FFFFFF")
@@ -352,7 +348,7 @@ class MovieDetailViewController: UIViewController {
             navBar.standardAppearance = appearance
             navBar.scrollEdgeAppearance = appearance
         }
-        setupWhiteBackArrow()
+        setupBackArrow(style: .white)
         setupUI()
         screenshotsCollectionView.delegate = self
         screenshotsCollectionView.dataSource = self
@@ -362,6 +358,14 @@ class MovieDetailViewController: UIViewController {
         
         fetchMovieDetails()
         
+        localizeLanguage()
+        
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(localizeLanguage),
+                name: NSNotification.Name("languageChanged"),
+                object: nil
+            )
     }
     
     override func viewDidLayoutSubviews() {
@@ -371,8 +375,6 @@ class MovieDetailViewController: UIViewController {
             gradientLayer.frame = descriptionGradientView.bounds
         }
     }
-    
-    
     
     //MARK: UI Setup
     
@@ -391,7 +393,7 @@ class MovieDetailViewController: UIViewController {
             nameLabel, detailLabel, grayView1, descriptionLabel,descriptionGradientView,
             fullDescriptionButton, directorLabel, directorNameLabel,
             producerLabel, producerNameLabel, grayView2,
-            seasonsLabel, seasonsAndSeriesLabel, SeasonsButton,
+            seriesLabel, seasonsAndSeriesLabel, SeasonsButton,
             screenshotsLabel, screenshotsCollectionView,
             similarMoviesLabel, similarCollectionView
         )
@@ -403,19 +405,15 @@ class MovieDetailViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
         
-        // ScrollView
         movieScrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        //ContentView
         movieContentView.snp.makeConstraints { make in
             make.edges.equalTo(movieScrollView.contentLayoutGuide)
             make.width.equalTo(movieScrollView.frameLayoutGuide)
         }
         
-        
-        // Poster и Gradient
         posterImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(movieContentView)
             make.height.equalTo(400)
@@ -454,14 +452,12 @@ class MovieDetailViewController: UIViewController {
             make.top.equalTo(shareButton.snp.bottom).offset(8)
         }
         
-        // BackgroundView
         backgroundView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(324)
             make.leading.trailing.equalTo(movieContentView)
             make.bottom.equalTo(movieContentView.snp.bottom)
         }
         
-        // Labels в backgroundView
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(backgroundView.snp.top).offset(24)
             make.leading.equalTo(backgroundView.snp.leading).inset(24)
@@ -522,25 +518,25 @@ class MovieDetailViewController: UIViewController {
             make.height.equalTo(1)
         }
         
-        seasonsLabel.snp.makeConstraints { make in
+        seriesLabel.snp.makeConstraints { make in
             make.top.equalTo(grayView2.snp.bottom).offset(24)
             make.leading.equalToSuperview().inset(24)
         }
         
         seasonsAndSeriesLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(seasonsLabel)
-            make.leading.equalTo(seasonsLabel.snp.trailing)
+            make.centerY.equalTo(seriesLabel)
+            make.leading.equalTo(seriesLabel.snp.trailing)
             make.trailing.equalToSuperview().inset(45)
         }
         
         SeasonsButton.snp.makeConstraints { make in
-            make.centerY.equalTo(seasonsLabel)
+            make.centerY.equalTo(seriesLabel)
             make.trailing.equalToSuperview().inset(24)
             make.size.equalTo(CGSize(width: 16, height: 16))
         }
         
         screenshotsLabel.snp.makeConstraints { make in
-            make.top.equalTo(seasonsLabel.snp.bottom).offset(32)
+            make.top.equalTo(seriesLabel.snp.bottom).offset(32)
             make.leading.equalToSuperview().inset(24)
         }
         
@@ -602,7 +598,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     func updateUI(with movie: Movie) {
-        print("✅ Фильм получен:", movie.name)
+        print("Фильм получен:", movie.name)
         
         if let posterString = movie.poster?.link {
             let fixedURLString = posterString.replacingOccurrences(
@@ -611,7 +607,7 @@ class MovieDetailViewController: UIViewController {
             )
             
             if let url = URL(string: fixedURLString) {
-                posterImageView.sd_imageTransition = .fade // плавное появление
+                posterImageView.sd_imageTransition = .fade
                 posterImageView.sd_setImage(
                     with: url,
                     placeholderImage: nil,
@@ -620,29 +616,35 @@ class MovieDetailViewController: UIViewController {
                 )
             }
             nameLabel.text = movie.name
-            detailLabel.text = makeDetailText(from: movie)
             setDescriptionText(movie.description)
             directorNameLabel.text = movie.director
             producerNameLabel.text = movie.producer
             
-            if movie.movieType == "SERIAL" {
-                let seasonCount = movie.seasonCount ?? 0
-                let seriesCount = movie.seriesCount ?? 0
+            let lang = UserDefaults.standard.string(forKey: "SelectedLanguageCode") ?? "kk"
+
+                nameLabel.text = movie.name
+                detailLabel.text = makeDetailText(from: movie, lang: lang)
                 
-                let seasonsText = seasonCount.declension("сезон", "сезона", "сезонов")
-                let seriesText = seriesCount.declension("серия", "серии", "серий")
-                
-                seasonsAndSeriesLabel.text = "\(seasonsText), \(seriesText)"
-            } else {
-                seasonsAndSeriesLabel.isHidden = true
-                seasonsLabel.isHidden = true
-                SeasonsButton.isHidden = true
-            }
-            
+                if movie.movieType == "SERIAL" {
+                    let seasonCount = movie.seasonCount ?? 0
+                    let seriesCount = movie.seriesCount ?? 0
+
+                    let seasonsText = seasonCount.seasonText(for: lang)
+                    let seriesText = seriesCount.episodeText(for: lang)
+
+                    seasonsAndSeriesLabel.text = "\(seasonsText), \(seriesText)"
+                    seasonsAndSeriesLabel.isHidden = false
+                    seriesLabel.isHidden = false
+                    SeasonsButton.isHidden = false
+                } else {
+                    seasonsAndSeriesLabel.isHidden = true
+                    seriesLabel.isHidden = true
+                    SeasonsButton.isHidden = true
+                }
         }
     }
     
-    private func makeDetailText(from movie: Movie) -> String {
+    private func makeDetailText(from movie: Movie, lang: String) -> String {
         let year = "\(movie.year)"
         let categoriesString = movie.categories?.map { $0.name }.joined(separator: ", ") ?? ""
         let durationString = movie.timing != nil ? "\(movie.timing!) мин." : ""
@@ -650,39 +652,33 @@ class MovieDetailViewController: UIViewController {
         if movie.movieType == "SERIAL" {
             let seasonCount = movie.seasonCount ?? 0
             let seriesCount = movie.seriesCount ?? 0
-            
-            let seasonsText = seasonCount.declension("сезон", "сезона", "сезонов")
-            let seriesText = seriesCount.declension("серия", "серии", "серий")
+
+            let seasonsText = seasonCount.seasonText(for: lang)
+            let seriesText = seriesCount.episodeText(for: lang)
 
             return "\(year) • \(categoriesString) • \(seasonsText), \(seriesText) • \(durationString)"
         } else {
-            // Фильм
             return "\(year) • \(categoriesString) • \(durationString)"
         }
     }
     
     private func setDescriptionText(_ text: String) {
-        // 1. Убираем переносы строк из JSON
         let cleanText = text.replacingOccurrences(of: "\n", with: " ")
         
-        // 2. Создаём paragraphStyle с lineSpacing
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineSpacing = 12
         paragraph.alignment = descriptionLabel.textAlignment
         
-        // 3. Атрибуты текста
         let attributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraph,
             .font: descriptionLabel.font as Any,
             .foregroundColor: descriptionLabel.textColor as Any,
-            .kern: 0.5 // расстояние между буквами, если нужно
+            .kern: 0.5
         ]
         
-        // 4. Устанавливаем текст и numberOfLines
         descriptionLabel.numberOfLines = 4
         descriptionLabel.attributedText = NSAttributedString(string: cleanText, attributes: attributes)
         
-        // 5. Определяем, нужно ли показывать кнопку "Толығырақ" и градиент
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
@@ -698,11 +694,11 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
+    
     func updateDescriptionGradient() {
         guard let gradientLayer = descriptionGradientView.layer.sublayers?.first as? CAGradientLayer else { return }
         gradientLayer.frame = descriptionGradientView.bounds
         
-        // Скрыть, если текст полностью раскрыт
         descriptionGradientView.isHidden = descriptionLabel.numberOfLines == 0
     }
     
@@ -714,7 +710,6 @@ class MovieDetailViewController: UIViewController {
             descriptionLabel.numberOfLines = 0
             fullDescriptionButton.setTitle("Жасыру", for: .normal)
         } else {
-            // показать только 4 строки
             descriptionLabel.numberOfLines = 4
             fullDescriptionButton.setTitle("Толығырақ", for: .normal)
         }
@@ -722,13 +717,22 @@ class MovieDetailViewController: UIViewController {
     }
     
     @objc func playMovieTapped() {
-        if movie?.movieType == "MOVIE" {
-            return
+        guard let movie = movie else { return }
+
+        if movie.movieType == "MOVIE" {
+            
+            guard let videoID = movie.video?.link, !videoID.isEmpty else {
+                print("Нет видео для этого фильма")
+                return
+            }
+
+            let playerVC = PlayerViewController()
+            playerVC.videoId = videoID
+            playerVC.modalPresentationStyle = .fullScreen
+            present(playerVC, animated: true)
         } else {
             let seasonsVC = SeriesAndSeasonsViewController()
-            
             seasonsVC.movie = movie
-            
             navigationController?.show(seasonsVC, sender: self)
             navigationItem.title = ""
         }
@@ -758,12 +762,45 @@ class MovieDetailViewController: UIViewController {
                 }
             } catch {
                 print("Ошибка при обновлении избранного на сервере:", error)
-                // Если нужно, можно откатить локальное состояние при ошибке:
                 movie.favorite.toggle()
                 self.movie = movie
                 configureFavoriteButton(isFavorite: movie.favorite)
             }
         }
+    }
+    
+    @objc private func localizeLanguage() {
+       
+        favoriteButtonLabel.text = "ADD_TO_LIST_LABEL".localized()
+        shareButtonLabel.text = "SHARE_BUTTON_LABEL".localized()
+        directorLabel.text = "DIRECTOR_LABEL".localized()
+        producerLabel.text = "PRODUCER_LABEL".localized()
+        seriesLabel.text = "SERIES_LABEL".localized()
+        screenshotsLabel.text = "SCREENSHOTS_LABEL".localized()
+        similarMoviesLabel.text = "SIMILAR_MOVIES_LABEL".localized()
+        
+        
+        let lang = UserDefaults.standard.string(forKey: "SelectedLanguageCode") ?? "kk"
+
+            if let movie = self.movie {
+                detailLabel.text = makeDetailText(from: movie, lang: lang)
+                
+                if movie.movieType == "SERIAL" {
+                    let seasonCount = movie.seasonCount ?? 0
+                    let seriesCount = movie.seriesCount ?? 0
+
+                    let seasonsText = seasonCount.seasonText(for: lang)
+                    let seriesText = seriesCount.episodeText(for: lang)
+
+                    seasonsAndSeriesLabel.text = "\(seasonsText), \(seriesText)"
+                }
+            }
+    }
+    
+    //MARK: Deinit
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
     
@@ -796,10 +833,8 @@ extension MovieDetailViewController: UICollectionViewDelegate, UICollectionViewD
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScreenshotCell", for: indexPath) as! ScreenshotCollectionViewCell
         
-        //        let transformer = SDImageResizingTransformer(size: CGSize(width: 184, height: 112), scaleMode: .aspectFill)
-        
         guard indexPath.item < screenshots.count else {
-            print("⚠️ ERROR: indexPath \(indexPath.item) >= screenshots.count \(screenshots.count)")
+            print("ERROR: indexPath \(indexPath.item) >= screenshots.count \(screenshots.count)")
             return cell
         }
         
@@ -821,7 +856,6 @@ extension MovieDetailViewController: UICollectionViewDelegate, UICollectionViewD
                 )
             }
         }
-        
         
         return cell
     }
