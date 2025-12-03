@@ -315,6 +315,7 @@ class ProfileViewController: UIViewController {
             let profile = try await UserService.shared.fetchProfile()
             await MainActor.run {
                 self.subProfileLabel.text = profile.user?.email ?? "No email"
+                self.profileLabel.text = profile.name
             }
         } catch {
             print("Ошибка получения профиля:", error)

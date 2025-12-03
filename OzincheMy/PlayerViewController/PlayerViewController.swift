@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 import youtube_ios_player_helper
 
 class PlayerViewController: UIViewController {
@@ -28,21 +27,35 @@ class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+        modalPresentationStyle = .fullScreen // обязательно
 
         setupPlayerView()
         setupCloseButton()
         loadVideo()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Программно заставляем fullscreen
+        playerView.webView?.evaluateJavaScript("player.playVideo(); player.setSize(window.innerWidth, window.innerHeight);") { _, _ in }
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .allButUpsideDown
+    }
+
+    override var shouldAutorotate: Bool {
+        return true
+    }
+
     private func setupPlayerView() {
         playerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(playerView)
-
         NSLayoutConstraint.activate([
-            playerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            playerView.topAnchor.constraint(equalTo: view.topAnchor),
             playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            playerView.heightAnchor.constraint(equalTo: playerView.widthAnchor, multiplier: 9.0/16.0)
+            playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
@@ -65,9 +78,8 @@ class PlayerViewController: UIViewController {
 
     private func loadVideo() {
         let id = videoId ?? ""
-
         playerView.load(withVideoId: id, playerVars: [
-            "playsinline": 1,    // inline = 1, fullscreen = 0
+            "playsinline": 0,
             "autoplay": 1,
             "controls": 1,
             "modestbranding": 1

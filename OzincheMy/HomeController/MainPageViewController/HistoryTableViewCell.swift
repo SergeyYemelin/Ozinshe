@@ -8,7 +8,15 @@
 import UIKit
 import SDWebImage
 
+protocol HistoryTableViewCellDelegate: AnyObject {
+    func historyTableViewCell(_ cell: HistoryTableViewCell, didSelect movie: Movie)
+}
+
 class HistoryTableViewCell: UITableViewCell {
+    
+    var movies: [Movie] = []
+    
+    weak var delegate: HistoryTableViewCellDelegate?
     
     static let identifier = "HistoryCell"
     
@@ -47,6 +55,15 @@ class HistoryTableViewCell: UITableViewCell {
         historyCollection.delegate = self
         historyCollection.dataSource = self
         
+        contentView.backgroundColor = UIColor(named: "FFFFFF-111827")
+        
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(localizeLanguage),
+                name: NSNotification.Name("languageChanged"),
+                object: nil
+            )
+        
     }
     
     required init?(coder: NSCoder) {
@@ -57,6 +74,8 @@ class HistoryTableViewCell: UITableViewCell {
         contentView.backgroundColor = UIColor(named: "FFFFFF - 111827")
         
         contentView.addSubviews(historyCollection, titleLabel)
+        
+        historyCollection.translatesAutoresizingMaskIntoConstraints = false
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -72,17 +91,42 @@ class HistoryTableViewCell: UITableViewCell {
             
         }
     }
+    
+    func configure(with movies: [Movie]) {
+        self.movies = movies
+
+        historyCollection.reloadData()
+    }
+    
+    @objc func localizeLanguage() {
+        self.titleLabel.text = "HISTORY_TITLE".localized()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
-extension HistoryTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HistoryTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, HistoryCollectionViewCellDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HistoryCollectionCell", for: indexPath) as! HistoryCollectionViewCell
         
+        let movie = movies[indexPath.item]
+            cell.configure(with: movie) // метод configure для ячейки HistoryCollectionViewCell
+        
+        cell.delegate = self
+        
         return cell
     }
+    
+    func historyCollectionViewCellDidTap(_ cell: HistoryCollectionViewCell) {
+            guard let indexPath = historyCollection.indexPath(for: cell) else { return }
+            let movie = movies[indexPath.item]
+            delegate?.historyTableViewCell(self, didSelect: movie)
+        }
 }

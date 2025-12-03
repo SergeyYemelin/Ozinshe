@@ -8,6 +8,9 @@
 
 //HomeViewController
 "ALL_LABEL" = "Барлығы";
+"GENRES_TITLE" = "Жанрды таңдаңыз";
+"AGE_CATEGORIES_TITLE" = "Жасына сәйкес";
+"HISTORY_TITLE" = "Қарауды жалғастырыңыз";
 
 //MovieDetailViewController
 "ADD_TO_LIST_LABEL" = "Тізімге қосу";

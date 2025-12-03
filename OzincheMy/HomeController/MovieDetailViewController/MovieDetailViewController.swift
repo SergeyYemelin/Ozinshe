@@ -129,6 +129,7 @@ class MovieDetailViewController: UIViewController {
     lazy var shareButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "ShareButtonImage"), for: .normal)
+        button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -597,6 +598,37 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
+    private func addToHistory(movieId: Int) async {
+        guard let url = URL(string: URLs.ADD_TO_HISTORY_URL) else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("Bearer \(Storage.sharedInstance.accessToken)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Таймкод всегда 0
+        let body: [String: Any] = [
+            "movieId": movieId,
+            "timeCode": 0
+        ]
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            print("Ошибка сериализации тела запроса для истории:", error)
+            return
+        }
+        
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Добавлено в историю. Код ответа:", httpResponse.statusCode)
+            }
+        } catch {
+            print("Ошибка добавления в историю:", error)
+        }
+    }
+    
     func updateUI(with movie: Movie) {
         print("Фильм получен:", movie.name)
         
@@ -719,6 +751,12 @@ class MovieDetailViewController: UIViewController {
     @objc func playMovieTapped() {
         guard let movie = movie else { return }
 
+        print("Попытка добавить фильм в историю, movieId:", movie.id)
+
+            Task {
+                await addToHistory(movieId: movie.id)
+            }
+        
         if movie.movieType == "MOVIE" {
             
             guard let videoID = movie.video?.link, !videoID.isEmpty else {
@@ -767,6 +805,16 @@ class MovieDetailViewController: UIViewController {
                 configureFavoriteButton(isFavorite: movie.favorite)
             }
         }
+    }
+    
+    @objc private func shareButtonTapped() {
+        guard let movie = movie else { return }
+        
+        let textToShare = movie.name
+        
+        let activityVC = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
+        
+        present(activityVC, animated: true)
     }
     
     @objc private func localizeLanguage() {

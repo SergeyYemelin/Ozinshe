@@ -24,18 +24,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let login = "testMail@gmail.com"
-        let password = "1234567"
+//        let login = "testMail@gmail.com"
+//        let password = "1234567"
 
-//        let onboardingVC = OnBoardingViewController()
-//        let navController = UINavigationController(rootViewController: onboardingVC)
+        let onboardingVC = OnBoardingViewController()
+        let navController = UINavigationController(rootViewController: onboardingVC)
         let loginVC = SignInViewController()
-        window?.rootViewController = loginVC
-        window?.makeKeyAndVisible()
-        loginVC.autoLogin(email: login, password: password)
-        
-//        window?.rootViewController = navController
+//        window?.rootViewController = loginVC
 //        window?.makeKeyAndVisible()
+//        loginVC.autoLogin(email: login, password: password)
+        
+        window?.rootViewController = navController
+        window?.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

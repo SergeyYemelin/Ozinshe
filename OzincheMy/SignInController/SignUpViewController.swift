@@ -274,8 +274,6 @@ class SignUpViewController: UIViewController {
                                                    name: NSNotification.Name("languageChanged"),
                                                    object: nil)
 
-//        updateLayout(hasError: true)
-        // Do any additional setup after loading the view.
     }
     
     deinit {

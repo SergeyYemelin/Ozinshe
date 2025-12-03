@@ -11,7 +11,8 @@ import SnapKit
 import SVProgressHUD
 import SwiftyJSON
 
-class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTableViewCellDelegate {
+class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTableViewCellDelegate, HistoryTableViewCellDelegate {
+    
     
     //MARK: - Add TableView
     
@@ -56,13 +57,31 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
+        rows = [
+            .bannerMovies([]),
+            .history([]),
+            .movies(categoryName: "", movies: []),
+            .genres(items: [], titleKey: "Жанрды таңдаңыз"),
+            .movies(categoryName: "", movies: []),
+            .movies(categoryName: "", movies: []),
+            .genres(items: [], titleKey: "Жасына сәйкес")
+        ]
+        
         addNavBarImage()
         setupUi()
         mainBannerDownoloadData()
+        loadHistoryMovies()
         genresDownloadData()
         moviesByCategoriesDownloadData()
         categoryAgeDownloadData()
         allMoviesDownloadData()
+        
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(languageDidChange),
+                name: NSNotification.Name("languageChanged"),
+                object: nil
+            )
     }
     
     func addNavBarImage() {
@@ -110,14 +129,40 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
                     
                     self.bannerMovies = bannerMovies
                     
-                    let row = HomeRow.bannerMovies(bannerMovies)
-                    rows.insert(row, at: 0)
+                    self.rows[0] = .bannerMovies(bannerMovies)
+                    self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                     
                     self.tableView.reloadData()
                 }
                 
             } catch {
                 print("Ошибка:", error)
+            }
+        }
+    }
+    
+    func loadHistoryMovies() {
+        guard let url = URL(string: URLs.HISTORY_MOVIES_URL) else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("Bearer \(Storage.sharedInstance.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        Task {
+            do {
+                let (data, _) = try await URLSession.shared.data(for: request)
+                let movies = try JSONDecoder().decode([Movie].self, from: data)
+                
+                await MainActor.run {
+                    guard !movies.isEmpty else { return }
+
+                    self.rows[1] = .history(movies)
+                    self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+                    
+                    self.tableView.reloadData()
+                }
+            } catch {
+                print("Ошибка загрузки истории:", error)
             }
         }
     }
@@ -140,8 +185,8 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
                 await MainActor.run {
                     self.genres = genres
                     
-                    let index = min(1, rows.count)
-                    self.rows.insert(.genres(items: genres, title: "Жанрды таңдаңыз"), at: index)
+                    self.rows[3] = .genres(items: genres, titleKey: "GENRES_TITLE")
+                    self.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .automatic)
                     
                     self.tableView.reloadData()
                 }
@@ -169,17 +214,15 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
                 let categories: [MainPageCategory] = try JSONDecoder().decode([MainPageCategory].self, from: data)
                 
                 await MainActor.run {
-                    for (index, category) in categories.enumerated() {
-                        let categoryRow = HomeRow.movies(categoryName: category.categoryName, movies: category.movies)
+                    for (i, category) in categories.enumerated() {
+                        let rowIndex = 2 + i  // 2, 3, 4? — нет. Нам нужно 2, 4, 5
+
+                        let map: [Int] = [2, 4, 5]
+                        let index = map[i]
+
+                        self.rows[index] = .movies(categoryName: category.categoryName, movies: category.movies)
                         
-                        let insertIndex: Int
-                        if index == 0 {
-                            insertIndex = min(1, self.rows.count)
-                        } else {
-                            insertIndex = min(3 + index - 1, self.rows.count)
-                        }
-                        
-                        self.rows.insert(categoryRow, at: insertIndex)
+                        self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
                     }
                     
                     self.tableView.reloadData()
@@ -209,8 +252,8 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
                 await MainActor.run {
                     self.categoriesAge = categoryAge
                     
-                    let index = min(5, rows.count)
-                    self.rows.insert(.genres(items: categoriesAge, title: "Жасына сәйкес"), at: index)
+                    self.rows[6] = .genres(items: categoriesAge, titleKey: "AGE_CATEGORIES_TITLE")
+                    self.tableView.reloadRows(at: [IndexPath(row: 6, section: 0)], with: .automatic)
                     
                     self.tableView.reloadData()
                 }
@@ -257,27 +300,34 @@ class HomeViewController: UIViewController, MainTableViewCellDelegate, GenreTabl
     
     func genreTableViewCell(_ cell: GenreTableViewCell, didSelect genre: Genre) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        
-        guard case .genres(_, let title) = rows[indexPath.row] else { return }
-        
+
         let filteredMovies: [Movie]
-        
-        if title == "Жанрды таңдаңыз" {
+
+        switch indexPath.row {
+        case 3:
             filteredMovies = allMovies.filter { movie in
                 movie.genres?.contains(where: { $0.id == genre.id }) ?? false
             }
-        } else if title == "Жасына сәйкес" {
+        case 6:
             filteredMovies = allMovies.filter { movie in
                 movie.categoryAges?.contains(where: { $0.id == genre.id }) ?? false
             }
-        } else {
+        default:
             filteredMovies = []
         }
-        
+
         let vc = MoviesListTableViewController()
         vc.categoryName = genre.name
         vc.movies = filteredMovies
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func languageDidChange() {
+        tableView.reloadData()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -294,6 +344,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, MainBa
             cell.configure(with: bannerMovies)
             cell.delegate = self
             return cell
+            
+        case .history(let movies):
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: HistoryTableViewCell.identifier,
+                for: indexPath
+            ) as! HistoryTableViewCell
+            cell.delegate = self
+            cell.configure(with: movies)
+            return cell
         
         case .movies(categoryName: let categoryName, movies: let movies):
             let cell = tableView.dequeueReusableCell(
@@ -305,9 +364,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, MainBa
             return cell
         
             
-        case .genres(let items, let title):
+        case .genres(let items, let titleKey):
             let cell = tableView.dequeueReusableCell(withIdentifier: GenreTableViewCell.identifier, for: indexPath) as! GenreTableViewCell
-            cell.configure(with: items, title: title)
+            cell.configure(with: items, title: titleKey.localized())
             cell.delegate = self
             return cell
         }
@@ -315,6 +374,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, MainBa
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             switch rows[indexPath.row] {
             case .bannerMovies: return 272
+            case .history: return 228
             case .movies: return 296
             case .genres: return 184
             }
@@ -328,6 +388,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, MainBa
     }
     
     func mainTableViewCell(_ cell: MainTableViewCell, didSelect movie: Movie) {
+            let detailVC = MovieDetailViewController(movieID: movie.id)
+            navigationController?.pushViewController(detailVC, animated: true)
+        }
+    
+    func historyTableViewCell(_ cell: HistoryTableViewCell, didSelect movie: Movie) {
             let detailVC = MovieDetailViewController(movieID: movie.id)
             navigationController?.pushViewController(detailVC, animated: true)
         }

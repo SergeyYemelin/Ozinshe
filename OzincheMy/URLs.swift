@@ -25,4 +25,6 @@ struct URLs {
     static let GET_PROFILE_URL = BASE_URL + "user/profile"
     static let UPDATE_PROFILE_URL = BASE_URL + "user/profile/"
     static let CHANGE_PASSWORD_URL = BASE_URL + "user/profile/changePassword"
+    static let HISTORY_MOVIES_URL = BASE_URL + "history/userHistory"
+    static let ADD_TO_HISTORY_URL = BASE_URL + "history"
 }

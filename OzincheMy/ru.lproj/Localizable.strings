@@ -8,6 +8,9 @@
 
 //HomeViewController
 "ALL_LABEL" = "Все";
+"GENRES_TITLE" = "Выберите жанр";
+"AGE_CATEGORIES_TITLE" = "По возрасту";
+"HISTORY_TITLE" = "Продолжить просмотр";
 
 //MovieDetailViewController
 "ADD_TO_LIST_LABEL" = "Добавить в список";

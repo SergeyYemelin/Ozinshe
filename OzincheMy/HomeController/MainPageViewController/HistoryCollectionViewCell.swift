@@ -7,68 +7,108 @@
 
 import UIKit
 
+protocol HistoryCollectionViewCellDelegate: AnyObject {
+    func historyCollectionViewCellDidTap(_ cell: HistoryCollectionViewCell)
+}
+
 class HistoryCollectionViewCell: UICollectionViewCell {
     
-        let identifier = "HistoryCollectionCell"
+    let identifier = "HistoryCollectionCell"
+    
+    weak var delegate: HistoryCollectionViewCellDelegate?
+    
+    let imageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "bannerImage")
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 12
         
-        let image = {
-            let imageView = UIImageView()
-            imageView.image = UIImage(named: "bannerImage")
-            imageView.clipsToBounds = true
-            imageView.layer.cornerRadius = 12
-            
-            return imageView
-        }()
+        return imageView
+    }()
+    
+    let titleLabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.text = "Глобус"
+        label.font = UIFont(name: "SFProDisplay-Semibold", size: 12)
+        label.textColor = UIColor(named: "111827-FFFFFF")
         
-        let titleLabel = {
-            let label = UILabel()
-            label.numberOfLines = 0
-            label.text = "Глобус"
-            label.font = UIFont(name: "SFProDisplay-Semibold", size: 12)
-            label.textColor = UIColor(named: "111827-FFFFFF")
-            
-            return label
-        }()
+        return label
+    }()
+    
+    let subTitleLabel = {
+        let label = UILabel()
+        label.text = "2-бөлім"
+        label.textColor = UIColor(red: 0.61, green: 0.64, blue: 0.69, alpha: 1)
+        label.font = UIFont(name: "SFProDisplay-Regular", size: 12)
         
-        let subtitleLabel = {
-            let label = UILabel()
-            label.text = "2-бөлім"
-            label.textColor = UIColor(red: 0.61, green: 0.64, blue: 0.69, alpha: 1)
-            label.font = UIFont(name: "SFProDisplay-Regular", size: 12)
-            
-            return label
-        }()
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-            
-            setupUI()
-            backgroundColor = UIColor(named: "FFFFFF-111827")
+        setupUI()
+        setupTap()
+        
+        backgroundColor = UIColor(named: "FFFFFF-111827")
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupUI() {
+        contentView.addSubviews(imageView, titleLabel, subTitleLabel)
+        
+        imageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.height.equalTo(112)
+            make.width.equalTo(164)
         }
         
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
+        titleLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom).offset(8)
         }
+        subTitleLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    func configure(with movie: Movie) {
+        titleLabel.text = movie.name
+        subTitleLabel.text = movie.categories?.map { $0.name }.joined(separator: ", ") ?? ""
         
-        func setupUI() {
-            contentView.addSubviews(image, titleLabel, subtitleLabel)
+        if let posterString = movie.poster?.link {
+            let fixedURLString = posterString.replacingOccurrences(
+                of: "api.ozinshe.com",
+                with: "apiozinshe.mobydev.kz"
+            )
             
-            image.snp.makeConstraints { make in
-                make.top.equalToSuperview()
-                make.height.equalTo(112)
-                make.width.equalTo(164)
+            if let url = URL(string: fixedURLString) {
+                imageView.sd_imageTransition = .fade
+                imageView.sd_setImage(
+                    with: url,
+                    placeholderImage: nil,
+                    options: [.continueInBackground, .retryFailed],
+                    completed: nil
+                )
             }
-            
-            titleLabel.snp.makeConstraints { make in
-                make.left.equalToSuperview()
-                make.right.equalToSuperview()
-                make.top.equalTo(image.snp.bottom).offset(8)
         }
-            subtitleLabel.snp.makeConstraints { make in
-                make.left.equalToSuperview()
-                make.right.equalToSuperview()
-                make.top.equalTo(titleLabel.snp.bottom).offset(4)
-                make.bottom.equalToSuperview()
-            }
+    }
+    
+    private func setupTap() {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
+            contentView.addGestureRecognizer(tap)
+        }
+
+        @objc private func didTap() {
+            delegate?.historyCollectionViewCellDidTap(self)
         }
 }

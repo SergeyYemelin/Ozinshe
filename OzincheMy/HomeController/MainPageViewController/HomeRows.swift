@@ -7,6 +7,7 @@
 
 enum HomeRow {
     case bannerMovies([Banner])
+    case history([Movie])
     case movies(categoryName: String, movies: [Movie])
-    case genres(items: [Genre], title: String)
+    case genres(items: [Genre], titleKey: String)
 }
